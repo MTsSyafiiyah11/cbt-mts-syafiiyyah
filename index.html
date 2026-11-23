@@ -43,6 +43,12 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
+      -webkit-touch-callout: none;
+    }
+    body.ujian-terkunci-screen #tampilan-ujian main {
+      filter: blur(16px);
+      pointer-events: none;
+      user-select: none;
     }
     @media print {
       body * { visibility: hidden !important; }
@@ -85,6 +91,73 @@
           Kembali ke Layar Penuh &amp; Lanjutkan Ujian
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL AKUN TERBLOKIR MAKSIMAL PELANGGARAN -->
+  <div id="modal-akun-terblokir-5x" class="fixed inset-0 z-[96] hidden items-center justify-center bg-slate-950/95 backdrop-blur-lg p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border-2 border-rose-600">
+      <div class="bg-rose-700 px-6 py-5 text-white flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center font-extrabold text-2xl shrink-0">⛔</div>
+        <div>
+          <span class="px-2 py-0.5 rounded bg-amber-400 text-rose-950 text-[10px] font-extrabold uppercase">Batas Pelanggaran Tercapai</span>
+          <h3 class="font-extrabold text-base sm:text-lg leading-tight mt-0.5">Akun Anda Dinonaktifkan</h3>
+        </div>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-sm font-extrabold text-rose-900 leading-relaxed text-center">
+          "Akun kamu sudah tidak aktif lagi, silahkan laporkan di proktor."
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-100 border border-slate-200 space-y-1 text-xs">
+          <div class="flex justify-between">
+            <span class="text-slate-500 font-semibold">Nama Peserta:</span>
+            <strong id="blokir-nama-siswa" class="text-slate-900 font-extrabold">-</strong>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500 font-semibold">Total Pelanggaran:</span>
+            <strong id="blokir-jumlah-pelanggaran" class="text-rose-700 font-extrabold">5 / 5</strong>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500 font-semibold">Status Ujian:</span>
+            <strong class="text-rose-700 font-extrabold">TERBLOKIR OTOMATIS</strong>
+          </div>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed text-center">
+          Sistem otomatis mengunci akses ujian dan mengirimkan laporan pelanggaran ke server pengawas. Silakan temui <strong>Proktor Ruang</strong> untuk verifikasi dan membuka blokir akun.
+        </p>
+        <button type="button" onclick="tutupModalAkunTerblokir5x()" class="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-sm shadow-md cursor-pointer">
+          Mengerti &amp; Lihat Bukti Status Ujian
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL KUNCI LAYAR KELUAR FULLSCREEN (WAJIB LAPOR PENGAWAS) -->
+  <div id="modal-kunci-fullscreen" class="fixed inset-0 z-[94] hidden items-center justify-center bg-slate-950/95 backdrop-blur-lg p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border-2 border-rose-600">
+      <div class="bg-rose-700 px-6 py-4 text-white flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center font-extrabold text-xl shrink-0">🔒</div>
+        <div>
+          <h3 class="font-extrabold text-base sm:text-lg leading-tight">Ujian Terkunci! Keluar Layar Penuh</h3>
+          <p class="text-xs text-rose-100">Soal dikunci otomatis oleh sistem pengawas</p>
+        </div>
+      </div>
+      <form onsubmit="bukaKunciDenganSandiPengawas(event)" class="p-6 space-y-4">
+        <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-xs font-bold text-rose-900 leading-relaxed">
+          Anda terdeteksi keluar dari mode <strong>Layar Penuh (Fullscreen)</strong>. Soal dikunci dan pelanggaran tercatat. <strong>Silakan lapor pengawas</strong> untuk memasukkan kode buka kunci dan kembali ke layar penuh!
+        </div>
+        <div class="p-3 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-between text-xs">
+          <span class="font-bold text-slate-600">Pelanggaran Tercatat:</span>
+          <span id="status-pelanggaran-kunci-fs" class="font-extrabold text-rose-700">1 / 5</span>
+        </div>
+        <div>
+          <label for="input-sandi-buka-fs" class="block text-xs font-extrabold uppercase text-slate-700 mb-1.5">Kata Sandi / Token Pengawas *</label>
+          <input type="password" id="input-sandi-buka-fs" required placeholder="Diisi oleh pengawas ruang..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-rose-600 text-sm font-bold outline-none" />
+        </div>
+        <button type="submit" class="w-full py-3 rounded-xl bg-rose-700 hover:bg-rose-800 text-white font-extrabold text-sm shadow-md cursor-pointer">
+          Buka Kunci &amp; Masuk Layar Penuh
+        </button>
+      </form>
     </div>
   </div>
 
@@ -536,6 +609,15 @@
 
     <main class="max-w-7xl w-full mx-auto px-3 sm:px-6 py-5 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
       <div class="lg:col-span-8 bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden flex flex-col">
+        <div class="px-5 py-2.5 bg-emerald-50/90 border-b border-emerald-200/80 flex flex-wrap items-center justify-between gap-2">
+          <span id="indikator-status-atas-soal" class="text-xs sm:text-sm font-extrabold text-madrasah-900">
+            Sudah dijawab 0/0 - Kurang 0 soal lagi
+          </span>
+          <span id="badge-kurang-soal-atas" class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-200 text-[11px] font-extrabold">
+            Belum Lengkap
+          </span>
+        </div>
+
         <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
           <div class="flex items-center gap-2">
             <span class="px-3 py-1 rounded-xl bg-madrasah-700 text-white text-xs sm:text-sm font-extrabold">
@@ -586,13 +668,16 @@
           <div id="grid-navigasi-soal" class="grid grid-cols-5 gap-2"></div>
           <div class="mt-5 pt-4 border-t border-slate-100 grid grid-cols-3 gap-2 text-[11px] font-semibold text-slate-600">
             <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-600 inline-block"></span> Dijawab</div>
+            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rose-600 inline-block"></span> Kosong</div>
             <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-400 inline-block"></span> Ragu</div>
-            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-white border border-slate-300 inline-block"></span> Kosong</div>
           </div>
         </div>
-        <div class="p-5 bg-slate-50 border-t border-slate-200">
-          <button type="button" onclick="konfirmasiSelesaiUjian()" class="w-full py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-sm shadow-md cursor-pointer">
-            Selesai &amp; Kumpulkan Ujian
+        <div class="p-5 bg-slate-50 border-t border-slate-200 space-y-2">
+          <button type="button" id="btn-cek-soal-kosong" onclick="arahKeSoalKosong()" class="w-full py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-sm shadow-md cursor-pointer">
+            CEK SOAL KOSONG (<span id="jumlah-soal-kosong-btn">0</span>)
+          </button>
+          <button type="button" id="btn-selesai-cerdas" onclick="konfirmasiSelesaiUjian()" class="hidden w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md cursor-pointer">
+            SELESAI &amp; KUMPULKAN UJIAN
           </button>
         </div>
       </div>
@@ -1889,7 +1974,8 @@
         return;
       }
       if (siswa.status === 'TERBLOKIR') {
-        tampilkanNotifikasi('Akun Anda terkunci karena batas pelanggaran. Hubungi proktor.', 'error');
+        tampilkanNotifikasi('Akun kamu sudah tidak aktif lagi, silahkan laporkan di proktor.', 'error');
+        bukaModalAkunTerblokir5x(siswa.nama, siswa.pelanggaran || p.batasPelanggaran || 5, p.batasPelanggaran || 5, false);
         return;
       }
       if (siswa.status === 'SELESAI' && (!siswa.mapelTerakhir || siswa.mapelTerakhir === mapelDipilih)) {
@@ -2081,6 +2167,9 @@
       renderSoalUjian();
       renderNavigasiSoal();
 
+      ujianTerkunciFullscreen = false;
+      document.body.classList.remove('ujian-terkunci-screen');
+      aktifkanKunciNavigasiBrowser();
       if (p.wajibLayarPenuh) {
         mintaLayarPenuh();
         setTimeout(() => {
@@ -2101,6 +2190,79 @@
       }
     }
 
+    let ujianTerkunciFullscreen = false;
+
+    function aktifkanKunciNavigasiBrowser() {
+      try {
+        history.pushState({ cbtLock: true }, '', location.href);
+      } catch (e) {}
+    }
+
+    window.addEventListener('popstate', () => {
+      if (sesiUjian.aktif) {
+        aktifkanKunciNavigasiBrowser();
+        catatPelanggaranAntiCurang('Tombol Back/Kembali dimatikan selama ujian berlangsung!');
+      }
+    });
+
+    window.addEventListener('beforeunload', e => {
+      if (sesiUjian.aktif) {
+        e.preventDefault();
+        e.returnValue = 'Ujian sedang berlangsung. Dilarang refresh atau menutup halaman!';
+        return e.returnValue;
+      }
+    });
+
+    function kunciSoalKarenaKeluarFullscreen() {
+      if (!sesiUjian.aktif) return;
+      ujianTerkunciFullscreen = true;
+      document.body.classList.add('ujian-terkunci-screen');
+      const batas = Number(dataAplikasi.pengaturan.batasPelanggaran) || 5;
+      document.getElementById('status-pelanggaran-kunci-fs').textContent = `${sesiUjian.pelanggaran} / ${batas}`;
+      document.getElementById('input-sandi-buka-fs').value = '';
+      const modal = document.getElementById('modal-kunci-fullscreen');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function bukaKunciDenganSandiPengawas(event) {
+      event.preventDefault();
+      const inputSandi = (document.getElementById('input-sandi-buka-fs').value || '').trim();
+      const tokenAktif = (dataAplikasi.pengaturan.token || '').trim().toUpperCase();
+      if (inputSandi === SANDI_PROKTOR_VALID || inputSandi.toUpperCase() === tokenAktif) {
+        ujianTerkunciFullscreen = false;
+        document.body.classList.remove('ujian-terkunci-screen');
+        const modal = document.getElementById('modal-kunci-fullscreen');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        mintaLayarPenuh();
+        tampilkanNotifikasi('Kunci layar dibuka oleh pengawas. Lanjutkan ujian dengan tertib.', 'sukses');
+      } else {
+        tampilkanNotifikasi('Kode pengawas salah! Hubungi pengawas ruang untuk membuka kunci.', 'error');
+      }
+    }
+
+    let redirectHasilSetelahBlokir = false;
+
+    function bukaModalAkunTerblokir5x(namaSiswa, jumlahPelanggaran, batasPelanggaran, keHalamanHasil = true) {
+      redirectHasilSetelahBlokir = keHalamanHasil;
+      document.getElementById('blokir-nama-siswa').textContent = namaSiswa || '-';
+      document.getElementById('blokir-jumlah-pelanggaran').textContent = `${jumlahPelanggaran} / ${batasPelanggaran}`;
+      const modal = document.getElementById('modal-akun-terblokir-5x');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function tutupModalAkunTerblokir5x() {
+      const modal = document.getElementById('modal-akun-terblokir-5x');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      if (redirectHasilSetelahBlokir) {
+        document.getElementById('tampilan-ujian').classList.add('hidden');
+        document.getElementById('tampilan-hasil').classList.remove('hidden');
+      }
+    }
+
     function tutupModalAntiCurang() {
       const modal = document.getElementById('modal-anti-curang');
       modal.classList.add('hidden');
@@ -2108,10 +2270,10 @@
       mintaLayarPenuh();
     }
 
-    function catatPelanggaranAntiCurang(alasan) {
+    function catatPelanggaranAntiCurang(alasan, wajibLaporPengawas = false) {
       if (!sesiUjian.aktif) return;
       const sekarang = Date.now();
-      if (sekarang - sesiUjian.waktuPelanggaranTerakhir < 2500) return;
+      if (!wajibLaporPengawas && sekarang - sesiUjian.waktuPelanggaranTerakhir < 2500) return;
       sesiUjian.waktuPelanggaranTerakhir = sekarang;
 
       sesiUjian.pelanggaran += 1;
@@ -2123,10 +2285,21 @@
 
       const batas = Number(dataAplikasi.pengaturan.batasPelanggaran) || 5;
       if (sesiUjian.pelanggaran >= batas) {
-        const modal = document.getElementById('modal-anti-curang');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        selesaikanUjianSiswa('TERBLOKIR OTOMATIS (Melebihi Batas Pelanggaran)');
+        const namaPeserta = sesiUjian.peserta ? sesiUjian.peserta.nama : 'Peserta';
+        const jmlPelanggaran = sesiUjian.pelanggaran;
+        document.body.classList.remove('ujian-terkunci-screen');
+        ['modal-anti-curang', 'modal-kunci-fullscreen'].forEach(idM => {
+          const m = document.getElementById(idM);
+          if (m) { m.classList.add('hidden'); m.classList.remove('flex'); }
+        });
+        selesaikanUjianSiswa('Akun kamu sudah tidak aktif lagi, silahkan laporkan di proktor.');
+        tampilkanNotifikasi('Akun kamu sudah tidak aktif lagi, silahkan laporkan di proktor.', 'error');
+        bukaModalAkunTerblokir5x(namaPeserta, jmlPelanggaran, batas, true);
+        return;
+      }
+
+      if (wajibLaporPengawas || ujianTerkunciFullscreen) {
+        kunciSoalKarenaKeluarFullscreen();
       } else {
         document.getElementById('teks-alasan-pelanggaran').textContent = alasan;
         document.getElementById('status-pelanggaran-modal').textContent = `${sesiUjian.pelanggaran} / ${batas}`;
@@ -2146,13 +2319,13 @@
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden && sesiUjian.aktif) {
-        catatPelanggaranAntiCurang('Anda berpindah tab atau keluar dari browser saat ujian berlangsung.');
+        catatPelanggaranAntiCurang('Pelanggaran! Anda terdeteksi berpindah tab atau membuka WhatsApp, YouTube, Google, atau aplikasi lain.');
       }
     });
 
     window.addEventListener('blur', () => {
       if (sesiUjian.aktif) {
-        catatPelanggaranAntiCurang('Fokus layar berpindah ke aplikasi atau jendela lain saat ujian berlangsung.');
+        catatPelanggaranAntiCurang('Pelanggaran! Fokus layar berpindah ke aplikasi lain atau jendela luar saat ujian.');
       }
     });
 
@@ -2163,7 +2336,7 @@
         sesiUjian.lebarAwalLayar = window.innerWidth;
         sesiUjian.tinggiAwalLayar = window.innerHeight;
       } else if (dataAplikasi.pengaturan.wajibLayarPenuh && sesiUjian.pernahLayarPenuh) {
-        catatPelanggaranAntiCurang('Anda keluar dari Mode Layar Penuh (Fullscreen) sebelum ujian selesai.');
+        catatPelanggaranAntiCurang('Anda keluar dari Mode Layar Penuh (Fullscreen)! Soal dikunci, segera lapor pengawas.', true);
       }
     });
 
@@ -2173,28 +2346,85 @@
         const rasioTinggi = window.innerHeight / sesiUjian.tinggiAwalLayar;
         const rasioLebar = window.innerWidth / sesiUjian.lebarAwalLayar;
         if (rasioTinggi < 0.72 || rasioLebar < 0.72) {
-          catatPelanggaranAntiCurang('Terdeteksi pembelahan layar (Split-Screen) atau pengecilan jendela ujian.');
+          catatPelanggaranAntiCurang('Terdeteksi pembelahan layar (Split-Screen) atau minimize layar ujian!', true);
         }
       }
     });
 
-    document.addEventListener('contextmenu', e => { if (sesiUjian.aktif) e.preventDefault(); });
-    document.addEventListener('copy', e => {
+    // Blokir klik ke tautan eksternal (WhatsApp, YouTube, Google, tab baru) selama ujian
+    document.addEventListener('click', e => {
+      if (!sesiUjian.aktif) return;
+      const link = e.target.closest('a');
+      if (link) {
+        e.preventDefault();
+        catatPelanggaranAntiCurang('Dilarang membuka tautan atau tab baru selama ujian berlangsung.');
+      }
+    }, true);
+
+    // Blokir Klik Kanan, Copy, Cut, Paste, Screenshot, Screen Record & Shortcut Refresh/Tab Baru
+    document.addEventListener('contextmenu', e => {
       if (sesiUjian.aktif) {
         e.preventDefault();
-        catatPelanggaranAntiCurang('Percobaan menyalin (Copy) teks soal terdeteksi.');
+        tampilkanNotifikasi('Klik kanan dimatikan selama ujian!', 'peringatan');
+      }
+    });
+    ['copy', 'cut', 'paste'].forEach(evName => {
+      document.addEventListener(evName, e => {
+        if (sesiUjian.aktif) {
+          e.preventDefault();
+          catatPelanggaranAntiCurang('Fitur Copy-Paste dimatikan selama ujian berlangsung!');
+        }
+      });
+    });
+    document.addEventListener('keyup', e => {
+      if (!sesiUjian.aktif) return;
+      if (e.key === 'PrintScreen') {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText('').catch(() => {});
+        }
+        catatPelanggaranAntiCurang('Percobaan Screenshot / Rekam Layar terdeteksi dan diblokir!');
       }
     });
     document.addEventListener('keydown', e => {
       if (!sesiUjian.aktif) return;
+      const keyLower = e.key.toLowerCase();
+      // Blokir ESC / F11 (keluar fullscreen)
       if (e.key === 'Escape' || e.key === 'F11') {
         e.preventDefault();
-        catatPelanggaranAntiCurang('Percobaan menekan tombol keluar layar penuh (ESC/F11) terdeteksi.');
+        catatPelanggaranAntiCurang('Percobaan keluar layar penuh (ESC/F11) terdeteksi!', true);
+        return;
       }
-      if ((e.ctrlKey || e.metaKey) && ['c', 'v', 'x', 'u', 'p', 's'].includes(e.key.toLowerCase())) {
+      // Blokir Refresh (F5, Ctrl+R, Cmd+R)
+      if (e.key === 'F5' || ((e.ctrlKey || e.metaKey) && keyLower === 'r')) {
         e.preventDefault();
+        tampilkanNotifikasi('Tombol Refresh dimatikan selama ujian!', 'peringatan');
+        return;
+      }
+      // Blokir Tab Baru / Jendela Baru / Tutup Tab / DevTools / Print / Copy-Paste
+      if ((e.ctrlKey || e.metaKey) && ['t', 'n', 'w', 'c', 'v', 'x', 'u', 'p', 's', 'a'].includes(keyLower)) {
+        e.preventDefault();
+        if (['t', 'n'].includes(keyLower)) {
+          catatPelanggaranAntiCurang('Dilarang membuka tab baru atau jendela baru selama ujian!');
+        } else if (['c', 'v', 'x'].includes(keyLower)) {
+          catatPelanggaranAntiCurang('Dilarang melakukan Copy-Paste selama ujian!');
+        }
+        return;
+      }
+      // Blokir Alt+Tab / Win+Shift+S / Screenshot / Screen Record (Win+G, Win+Alt+R)
+      if (e.key === 'PrintScreen' || (e.metaKey && e.shiftKey && ['s', '3', '4', '5'].includes(keyLower)) || (e.metaKey && ['g', 'r'].includes(keyLower))) {
+        e.preventDefault();
+        catatPelanggaranAntiCurang('Percobaan Screenshot / Screen Record terdeteksi dan diblokir!');
       }
     });
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+      navigator.mediaDevices.getDisplayMedia = function () {
+        if (sesiUjian.aktif) {
+          catatPelanggaranAntiCurang('Screen Record / berbagi layar diblokir selama ujian!');
+        }
+        return Promise.reject(new Error('Screen recording diblokir oleh sistem ujian.'));
+      };
+    }
 
     function mulaiTimerUjian() {
       if (sesiUjian.intervalWaktu) clearInterval(sesiUjian.intervalWaktu);
@@ -2260,8 +2490,11 @@
 
       document.getElementById('cek-ragu-soal').checked = !!sesiUjian.ragu[soal.id];
       document.getElementById('btn-soal-sebelumnya').disabled = sesiUjian.indeksAktif === 0;
+      const semuaTerjawabSekarang = sesiUjian.soalTerurut.every(isSoalTerjawab);
       document.getElementById('btn-soal-berikutnya').textContent =
-        sesiUjian.indeksAktif === sesiUjian.soalTerurut.length - 1 ? 'Cek Selesai' : 'Selanjutnya →';
+        sesiUjian.indeksAktif === sesiUjian.soalTerurut.length - 1
+          ? (semuaTerjawabSekarang ? 'Selesai →' : 'Cek Soal Kosong →')
+          : 'Selanjutnya →';
 
       const wadahOpsi = document.getElementById('wadah-opsi-jawaban');
       const jawabanSaatIni = sesiUjian.jawaban[soal.id];
@@ -2381,18 +2614,65 @@
       simpanDataAplikasi();
     }
 
+    function arahKeSoalKosong() {
+      const idxKosong = sesiUjian.soalTerurut.findIndex(s => !isSoalTerjawab(s));
+      if (idxKosong >= 0) {
+        lompatKeSoal(idxKosong);
+        tampilkanNotifikasi(`Dialihkan ke Soal No. ${idxKosong + 1} yang belum dijawab.`, 'peringatan');
+      } else {
+        tampilkanNotifikasi('Semua soal sudah dijawab! Silakan klik tombol SELESAI.', 'sukses');
+      }
+    }
+
     function renderNavigasiSoal() {
       const grid = document.getElementById('grid-navigasi-soal');
       const total = sesiUjian.soalTerurut.length;
       const terjawab = sesiUjian.soalTerurut.filter(isSoalTerjawab).length;
+      const kurang = Math.max(0, total - terjawab);
+
       document.getElementById('ringkasan-progres-ujian').textContent = `Terjawab: ${terjawab} dari ${total} soal`;
 
+      // Indikator di atas soal: "Sudah dijawab 48/50 - Kurang 2 soal lagi"
+      const indikatorAtas = document.getElementById('indikator-status-atas-soal');
+      const badgeAtas = document.getElementById('badge-kurang-soal-atas');
+      if (indikatorAtas) {
+        indikatorAtas.textContent = kurang > 0
+          ? `Sudah dijawab ${terjawab}/${total} - Kurang ${kurang} soal lagi`
+          : `Sudah dijawab ${terjawab}/${total} - Semua soal lengkap!`;
+      }
+      if (badgeAtas) {
+        if (kurang > 0) {
+          badgeAtas.textContent = `Kurang ${kurang} Soal`;
+          badgeAtas.className = 'px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-200 text-[11px] font-extrabold';
+        } else {
+          badgeAtas.textContent = 'Siap Dikumpulkan';
+          badgeAtas.className = 'px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[11px] font-extrabold';
+        }
+      }
+
+      // Tombol Selesai Cerdas: tampilkan CEK SOAL KOSONG jika ada kosong, atau tombol SELESAI hijau jika 100% terjawab
+      const btnCekKosong = document.getElementById('btn-cek-soal-kosong');
+      const btnSelesai = document.getElementById('btn-selesai-cerdas');
+      const spanKosong = document.getElementById('jumlah-soal-kosong-btn');
+      if (spanKosong) spanKosong.textContent = kurang;
+
+      if (btnCekKosong && btnSelesai) {
+        if (kurang > 0 || total === 0) {
+          btnCekKosong.classList.remove('hidden');
+          btnSelesai.classList.add('hidden');
+        } else {
+          btnCekKosong.classList.add('hidden');
+          btnSelesai.classList.remove('hidden');
+        }
+      }
+
+      // Navigasi nomor soal: Hijau = dijawab, Merah = belum dijawab, Kuning = ragu-ragu
       grid.innerHTML = sesiUjian.soalTerurut.map((s, idx) => {
         const aktif = idx === sesiUjian.indeksAktif;
         const ragu = !!sesiUjian.ragu[s.id];
         const dijawab = isSoalTerjawab(s);
 
-        let kelas = 'bg-white border border-slate-300 text-slate-700';
+        let kelas = 'bg-rose-600 text-white border border-rose-700';
         if (ragu) kelas = 'bg-amber-400 text-amber-950 border border-amber-500';
         else if (dijawab) kelas = 'bg-emerald-600 text-white border border-emerald-700';
 
@@ -2411,7 +2691,12 @@
     function pindahSoal(arah) {
       const target = sesiUjian.indeksAktif + arah;
       if (target >= sesiUjian.soalTerurut.length) {
-        konfirmasiSelesaiUjian();
+        const kurang = sesiUjian.soalTerurut.filter(s => !isSoalTerjawab(s)).length;
+        if (kurang > 0) {
+          arahKeSoalKosong();
+        } else {
+          konfirmasiSelesaiUjian();
+        }
         return;
       }
       lompatKeSoal(target);
@@ -2421,15 +2706,34 @@
       const total = sesiUjian.soalTerurut.length;
       const terjawab = sesiUjian.soalTerurut.filter(isSoalTerjawab).length;
       const kosong = total - terjawab;
-      const pesan = kosong > 0
-        ? `Masih ada ${kosong} soal yang belum dijawab. Yakin ingin mengumpulkan ujian sekarang?`
-        : 'Semua soal telah dijawab. Kumpulkan ujian sekarang dan lihat hasil nilai Anda?';
-      bukaModalKonfirmasi('Kumpulkan Ujian CBT', pesan, () => selesaikanUjianSiswa('Diselesaikan Peserta'));
+      if (kosong > 0) {
+        arahKeSoalKosong();
+        return;
+      }
+      // Konfirmasi tahap 1
+      bukaModalKonfirmasi(
+        'Konfirmasi Pengumpulan (1/2)',
+        'Yakin mau mengumpulkan? Jawaban tidak bisa diubah lagi.',
+        () => {
+          // Konfirmasi tahap 2
+          setTimeout(() => {
+            bukaModalKonfirmasi(
+              'Konfirmasi Akhir Pengumpulan (2/2)',
+              'Yakin mau mengumpulkan? Jawaban tidak bisa diubah lagi. Klik "Ya, Lanjutkan" untuk mengirim jawaban ke server sekarang.',
+              () => selesaikanUjianSiswa('Diselesaikan Peserta')
+            );
+          }, 150);
+        }
+      );
     }
 
     function selesaikanUjianSiswa(statusAkhir) {
       if (!sesiUjian.aktif) return;
       sesiUjian.aktif = false;
+      ujianTerkunciFullscreen = false;
+      document.body.classList.remove('ujian-terkunci-screen');
+      const modalKunciFs = document.getElementById('modal-kunci-fullscreen');
+      if (modalKunciFs) { modalKunciFs.classList.add('hidden'); modalKunciFs.classList.remove('flex'); }
       if (sesiUjian.intervalWaktu) clearInterval(sesiUjian.intervalWaktu);
       if (document.fullscreenElement && document.exitFullscreen) {
         document.exitFullscreen().catch(() => {});
@@ -2457,7 +2761,8 @@
       const siswa = sesiUjian.peserta;
       const mapelSelesai = sesiUjian.mapelDipilih || dataAplikasi.pengaturan.mataPelajaran;
 
-      siswa.status = statusAkhir.startsWith('TERBLOKIR') ? 'TERBLOKIR' : 'SELESAI';
+      const isTerblokir = statusAkhir.startsWith('TERBLOKIR') || statusAkhir.toLowerCase().includes('tidak aktif');
+      siswa.status = isTerblokir ? 'TERBLOKIR' : 'SELESAI';
       siswa.benar = jumlahBenar;
       siswa.totalSoal = total;
       siswa.nilai = nilaiAkhir;
