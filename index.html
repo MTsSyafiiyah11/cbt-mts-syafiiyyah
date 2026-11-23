@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>CBT PRO — MTs Syafi'iyyah Ngaringan</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -648,7 +650,7 @@
   <!-- =================================================================== -->
   <div id="tampilan-guru" class="hidden flex-1 flex flex-col bg-slate-100">
     <header class="bg-slate-900 text-white sticky top-0 z-30 shadow-md">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div id="blok-header-proktor-penuh" class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-3">
           <div class="w-11 h-11 rounded-xl bg-white p-0.5 flex items-center justify-center shrink-0 border border-amber-300/60">
             <img id="guru-logo-madrasah" src="" alt="Logo MTs Syafi'iyyah" class="w-full h-full object-contain" />
@@ -675,23 +677,45 @@
         </div>
       </div>
 
-      <div class="bg-slate-800 border-t border-slate-700">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex overflow-x-auto gap-1.5">
-          <button type="button" id="tab-guru-pantau" onclick="gantiTabGuru('pantau')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-madrasah-600 text-white whitespace-nowrap cursor-pointer">
-            1. Pantau Peserta
+      <div id="bar-tab-guru" class="bg-slate-800 border-t border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between gap-2">
+          <div class="flex overflow-x-auto gap-1.5 flex-1">
+            <button type="button" id="tab-guru-pantau" onclick="gantiTabGuru('pantau')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-madrasah-600 text-white whitespace-nowrap cursor-pointer">
+              1. Pantau Peserta
+            </button>
+            <button type="button" id="tab-guru-soal" onclick="gantiTabGuru('soal')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700 whitespace-nowrap cursor-pointer">
+              2. Bank Soal &amp; Unggah
+            </button>
+            <button type="button" id="tab-guru-siswa" onclick="gantiTabGuru('siswa')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700 whitespace-nowrap cursor-pointer">
+              3. Siswa, Foto &amp; Kartu
+            </button>
+            <button type="button" id="tab-guru-nilai" onclick="gantiTabGuru('nilai')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700 whitespace-nowrap cursor-pointer">
+              4. Rekap Nilai &amp; Spreadsheet
+            </button>
+            <button type="button" id="tab-guru-atur" onclick="gantiTabGuru('atur')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700 whitespace-nowrap cursor-pointer">
+              5. Jadwal &amp; Pengaturan Ujian
+            </button>
+          </div>
+          <button type="button" onclick="toggleMinimizeMenuGuru()" class="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-amber-300 text-[11px] font-extrabold whitespace-nowrap shrink-0 cursor-pointer">
+            ▲ Ciutkan
           </button>
-          <button type="button" id="tab-guru-soal" onclick="gantiTabGuru('soal')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700 whitespace-nowrap cursor-pointer">
-            2. Bank Soal &amp; Unggah
-          </button>
-          <button type="button" id="tab-guru-siswa" onclick="gantiTabGuru('siswa')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700 whitespace-nowrap cursor-pointer">
-            3. Siswa, Foto &amp; Kartu
-          </button>
-          <button type="button" id="tab-guru-nilai" onclick="gantiTabGuru('nilai')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700 whitespace-nowrap cursor-pointer">
-            4. Rekap Nilai &amp; Spreadsheet
-          </button>
-          <button type="button" id="tab-guru-atur" onclick="gantiTabGuru('atur')" class="px-3.5 py-2 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700 whitespace-nowrap cursor-pointer">
-            5. Jadwal &amp; Pengaturan Ujian
-          </button>
+        </div>
+      </div>
+
+      <div id="bar-menu-terciut" class="hidden bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between gap-2 text-xs">
+          <div class="flex items-center gap-2 min-w-0">
+            <span id="label-tab-aktif-terciut" class="text-emerald-300 font-extrabold truncate">1. Pantau Peserta</span>
+            <span id="token-terciut-ringkas" class="hidden sm:inline-block px-2 py-0.5 rounded bg-slate-800 text-amber-400 font-mono text-[11px] font-bold shrink-0">MTS2026</span>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button type="button" onclick="keluarProktor()" class="px-2.5 py-1 rounded-lg bg-rose-600/90 hover:bg-rose-600 text-white text-[11px] font-bold cursor-pointer">
+              Keluar
+            </button>
+            <button type="button" onclick="toggleMinimizeMenuGuru()" class="px-3 py-1 rounded-lg bg-madrasah-600 hover:bg-madrasah-700 text-white text-[11px] font-extrabold cursor-pointer">
+              ▼ Buka Menu
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -767,15 +791,18 @@
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
             <div>
               <h2 class="text-lg font-extrabold text-slate-900">Unggah &amp; Impor Soal Massal per Mapel &amp; Kelas</h2>
-              <p class="text-xs text-slate-500">Pilih mata pelajaran (misal: Fiqih) dan target kelas sebelum memasukkan soal massal agar siap dipakai sesuai jadwal ujian.</p>
+              <p class="text-xs text-slate-500">Pilih mata pelajaran &amp; kelas, lalu unggah file <strong>Word (.docx)</strong>, <strong>PDF (.pdf)</strong>, atau <strong>CSV (.csv)</strong>.</p>
             </div>
             <div class="flex flex-wrap items-center gap-2">
-              <button type="button" onclick="unduhContohFormatSoal()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer">
-                Unduh Contoh Format CSV
+              <button type="button" onclick="unduhContohFormatWord()" class="px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 text-xs font-bold cursor-pointer">
+                Contoh Format Word
               </button>
-              <label class="cursor-pointer px-3.5 py-2 rounded-xl bg-madrasah-600 hover:bg-madrasah-700 text-white text-xs font-bold">
-                <span>Unggah File CSV</span>
-                <input type="file" accept=".csv,.txt" onchange="prosesUnggahFileSoal(event)" class="hidden" />
+              <button type="button" onclick="unduhContohFormatSoal()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer">
+                Contoh CSV
+              </button>
+              <label class="cursor-pointer px-3.5 py-2 rounded-xl bg-madrasah-600 hover:bg-madrasah-700 text-white text-xs font-extrabold shadow-xs">
+                <span>Unggah Word / PDF / CSV</span>
+                <input type="file" accept=".docx,.pdf,.csv,.txt,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,text/csv" onchange="prosesUnggahFileSoal(event)" class="hidden" />
               </label>
             </div>
           </div>
@@ -2504,8 +2531,39 @@
       muatFormPengaturan();
     }
 
+    let menuGuruDiciutkan = false;
+    const LABEL_TAB_GURU = {
+      pantau: '1. Pantau Peserta',
+      soal: '2. Bank Soal & Unggah',
+      siswa: '3. Siswa, Foto & Kartu',
+      nilai: '4. Rekap Nilai & Spreadsheet',
+      atur: '5. Jadwal & Pengaturan Ujian'
+    };
+
+    function perbaruiLabelTabTerciut(namaTab) {
+      const el = document.getElementById('label-tab-aktif-terciut');
+      if (el && LABEL_TAB_GURU[namaTab]) {
+        el.textContent = `Menu aktif: ${LABEL_TAB_GURU[namaTab]}`;
+      }
+    }
+
+    function toggleMinimizeMenuGuru() {
+      menuGuruDiciutkan = !menuGuruDiciutkan;
+      const headerPenuh = document.getElementById('blok-header-proktor-penuh');
+      const barPenuh = document.getElementById('bar-tab-guru');
+      const barTerciut = document.getElementById('bar-menu-terciut');
+      const tokenTerciut = document.getElementById('token-terciut-ringkas');
+      if (tokenTerciut && dataAplikasi.pengaturan?.token) {
+        tokenTerciut.textContent = dataAplikasi.pengaturan.token;
+      }
+      if (headerPenuh) headerPenuh.classList.toggle('hidden', menuGuruDiciutkan);
+      if (barPenuh) barPenuh.classList.toggle('hidden', menuGuruDiciutkan);
+      if (barTerciut) barTerciut.classList.toggle('hidden', !menuGuruDiciutkan);
+    }
+
     function gantiTabGuru(namaTab) {
       if (!pastikanProktor()) return;
+      perbaruiLabelTabTerciut(namaTab);
       ['pantau', 'soal', 'siswa', 'nilai', 'atur'].forEach(t => {
         document.getElementById(`panel-guru-${t}`).classList.toggle('hidden', t !== namaTab);
         const btn = document.getElementById(`tab-guru-${t}`);
@@ -3050,6 +3108,35 @@
       tampilkanNotifikasi('Perubahan soal disimpan & disinkronkan.', 'sukses');
     }
 
+    function unduhContohFormatWord() {
+      if (!pastikanProktor()) return;
+      const isiDoc = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+        <head><meta charset="utf-8"><title>Contoh Format Soal Word CBT MTs</title></head>
+        <body style="font-family: Arial, sans-serif; font-size: 12pt; line-height: 1.5;">
+          <h3>CONTOH FORMAT NASKAH SOAL WORD (.DOCX) / PDF — CBT MTs SYAFI'IYYAH</h3>
+          <p><strong>Petunjuk:</strong> Ketik soal bernomor seperti biasa (1., 2., dst.), pilihan A. B. C. D., dan tulis <strong>Kunci: B</strong> di bawah setiap soal. Simpan sebagai <strong>Word (.docx)</strong> atau <strong>PDF (.pdf)</strong> lalu unggah ke aplikasi.</p>
+          <hr/>
+          <p>1. Rukun wudu yang pertama kali dilakukan adalah...<br/>
+          A. Membasuh muka<br/>
+          B. Niat di dalam hati<br/>
+          C. Membasuh kedua tangan<br/>
+          D. Mengusap sebagian kepala<br/>
+          Kunci: B<br/>
+          Pembahasan: Niat merupakan rukun wudu pertama menurut mazhab Syafi'i.</p>
+
+          <p>2. Hukum melaksanakan salat lima waktu bagi setiap muslim yang mukallaf adalah...<br/>
+          A. Sunnah muakkad<br/>
+          B. Fardu kifayah<br/>
+          C. Fardu ain<br/>
+          D. Mubah<br/>
+          Kunci: C</p>
+        </body></html>
+      `;
+      unduhTeks(isiDoc, 'Contoh_Format_Soal_Word_MTs.doc', 'application/msword;charset=utf-8');
+      tampilkanNotifikasi('Contoh format Word diunduh. Simpan ulang sebagai .docx / .pdf saat mengunggah.', 'sukses');
+    }
+
     function unduhContohFormatSoal() {
       if (!pastikanProktor()) return;
       const contoh = [
@@ -3058,6 +3145,157 @@
         'MCSA,IPA,VIII,"Perhatikan gambar struktur jantung berikut. Bagian bilik kiri ditunjukkan nomor...","1","2","3","4","A","","Bilik kiri memompa darah ke seluruh tubuh.","https://placehold.co/600x320/047857/ffffff?text=Diagram+Jantung","","","",""'
       ].join('\n');
       unduhTeks(contoh, 'Contoh_Format_Soal_MTs.csv', 'text/csv;charset=utf-8');
+    }
+
+    function parseTeksNaskahWordAtauPDF(teksMentah, mapelDefault, kelasDefault) {
+      const valid = [];
+      const errors = [];
+      const teksBersih = teksMentah.replace(/\r/g, '').replace(/\u00A0/g, ' ');
+      const barisList = teksBersih.split('\n').map(b => b.trim()).filter(Boolean);
+
+      // Cek apakah format satu baris pakai pemisah "|"
+      if (barisList.some(b => b.includes('|') && /kunci/i.test(b))) {
+        barisList.forEach((baris, idx) => {
+          const noBaris = idx + 1;
+          const bagian = baris.split('|').map(p => p.trim());
+          if (bagian.length < 6) {
+            errors.push(`Baris ${noBaris}: Format pemisah "|" kurang lengkap.`);
+            return;
+          }
+          const pertanyaan = bagian[0].replace(/^\d+[\.\)]\s*/, '').trim();
+          const bersihkanOpsi = str => (str || '').replace(/^[A-Da-d][\.\)]\s*/, '').trim();
+          const opsi = [bersihkanOpsi(bagian[1]), bersihkanOpsi(bagian[2]), bersihkanOpsi(bagian[3]), bersihkanOpsi(bagian[4])];
+          const hurufKunci = ekstrakHurufKunciTeks(bagian[5]);
+          if (!pertanyaan || opsi.some(o => !o) || !hurufKunci) {
+            errors.push(`Baris ${noBaris}: Pertanyaan, opsi A-D, atau Kunci tidak valid.`);
+            return;
+          }
+          valid.push({
+            id: 'S' + Date.now() + '_' + idx,
+            mapel: mapelDefault,
+            kelas: kelasDefault,
+            tipe: 'MCSA',
+            teksArab: '',
+            stimulus: '',
+            pertanyaan,
+            opsi,
+            kunci: ['A', 'B', 'C', 'D'].indexOf(hurufKunci),
+            pembahasan: bagian[6] || '',
+            gambarSoal: '',
+            gambarOpsi: ['', '', '', '']
+          });
+        });
+        return { valid, errors };
+      }
+
+      // Format naskah standar Word / PDF (bernomor 1., 2., dst. dengan A., B., C., D. dan Kunci:)
+      const blokSoal = [];
+      let blokSaatIni = [];
+      barisList.forEach(baris => {
+        if (/^\d+[\.\)]\s+/.test(baris) && blokSaatIni.length > 0) {
+          blokSoal.push(blokSaatIni);
+          blokSaatIni = [baris];
+        } else {
+          blokSaatIni.push(baris);
+        }
+      });
+      if (blokSaatIni.length > 0) blokSoal.push(blokSaatIni);
+
+      blokSoal.forEach((blok, idx) => {
+        const noUrut = idx + 1;
+        let pertanyaanLines = [];
+        const opsiMap = { A: '', B: '', C: '', D: '' };
+        let hurufKunci = null;
+        let pembahasan = '';
+        let bagianAktif = 'PERTANYAAN';
+
+        blok.forEach((baris, bIdx) => {
+          let teks = bIdx === 0 ? baris.replace(/^\d+[\.\)]\s*/, '').trim() : baris;
+
+          // Deteksi baris Kunci (misal: "Kunci: B", "Kunci Jawaban = C", "Jawaban: A")
+          const mKunci = teks.match(/^(?:kunci(?:\s*jawaban)?|jawaban)\s*[:=\-]?\s*([A-Da-d])\b/i);
+          if (mKunci) {
+            hurufKunci = mKunci[1].toUpperCase();
+            bagianAktif = 'KUNCI';
+            return;
+          }
+
+          // Deteksi Pembahasan
+          const mBahas = teks.match(/^pembahasan\s*[:=\-]?\s*(.*)$/i);
+          if (mBahas) {
+            pembahasan = mBahas[1].trim();
+            bagianAktif = 'BAHAS';
+            return;
+          }
+
+          // Deteksi jika dalam 1 baris ada beberapa opsi sekaligus (misal: "A. Satu   B. Dua   C. Tiga   D. Empat")
+          const segmenInline = teks.split(/(?=\b[A-Da-d][\.\)]\s+)/g).map(s => s.trim()).filter(Boolean);
+          if (segmenInline.length > 1 && /^[A-Da-d][\.\)]\s+/.test(segmenInline[0])) {
+            segmenInline.forEach(seg => {
+              const mOpt = seg.match(/^([A-Da-d])[\.\)]\s*(.*)$/);
+              if (mOpt) {
+                const h = mOpt[1].toUpperCase();
+                opsiMap[h] = mOpt[2].trim();
+                bagianAktif = h;
+              }
+            });
+            return;
+          }
+
+          // Deteksi opsi tunggal di awal baris ("A. ...", "B) ...")
+          const mOpsi = teks.match(/^([A-Da-d])[\.\)]\s*(.*)$/);
+          if (mOpsi) {
+            const h = mOpsi[1].toUpperCase();
+            opsiMap[h] = mOpsi[2].trim();
+            bagianAktif = h;
+            return;
+          }
+
+          // Lanjutan baris sebelumnya
+          if (bagianAktif === 'PERTANYAAN') {
+            pertanyaanLines.push(teks);
+          } else if (['A', 'B', 'C', 'D'].includes(bagianAktif)) {
+            opsiMap[bagianAktif] = (opsiMap[bagianAktif] + ' ' + teks).trim();
+          } else if (bagianAktif === 'BAHAS') {
+            pembahasan = (pembahasan + ' ' + teks).trim();
+          }
+        });
+
+        const pertanyaan = pertanyaanLines.join(' ').trim();
+        const opsi = [opsiMap.A, opsiMap.B, opsiMap.C, opsiMap.D];
+
+        if (!pertanyaan && opsi.every(o => !o)) return;
+
+        if (!pertanyaan) {
+          errors.push(`Soal #${noUrut}: Teks pertanyaan kosong.`);
+          return;
+        }
+        if (opsi.some(o => !o)) {
+          errors.push(`Soal #${noUrut} ("${pertanyaan.slice(0, 35)}..."): Pilihan A, B, C, atau D belum lengkap.`);
+          return;
+        }
+        if (!hurufKunci || !['A', 'B', 'C', 'D'].includes(hurufKunci)) {
+          errors.push(`Soal #${noUrut} ("${pertanyaan.slice(0, 35)}..."): Kunci jawaban tidak ditemukan (tulis "Kunci: A/B/C/D").`);
+          return;
+        }
+
+        valid.push({
+          id: 'S' + Date.now() + '_' + idx,
+          mapel: mapelDefault,
+          kelas: kelasDefault,
+          tipe: 'MCSA',
+          teksArab: '',
+          stimulus: '',
+          pertanyaan,
+          opsi,
+          kunci: ['A', 'B', 'C', 'D'].indexOf(hurufKunci),
+          pembahasan,
+          gambarSoal: '',
+          gambarOpsi: ['', '', '', '']
+        });
+      });
+
+      return { valid, errors };
     }
 
     function parseBarisCSV(baris) {
@@ -3195,85 +3433,156 @@
       tampilkanNotifikasi(`Impor selesai: ${masukBaru} baru, ${ditimpa} ditimpa, ${dilewati} dobel dilewati.`, 'sukses');
     }
 
-    function prosesUnggahFileSoal(event) {
+    async function prosesUnggahFileSoal(event) {
       if (!pastikanProktor()) { event.target.value = ''; return; }
       const berkas = event.target.files[0];
       if (!berkas) return;
+
+      const namaFile = berkas.name || '';
+      const ekstensi = namaFile.split('.').pop().toLowerCase();
       const mapelDefault = normalisasiNamaMapel(document.getElementById('impor-massal-mapel')?.value || dataAplikasi.pengaturan.mataPelajaran);
       const kelasDefault = normalisasiJenjangKelas(document.getElementById('impor-massal-kelas')?.value || 'SEMUA');
-      const daftarMapelDikenal = ambilDaftarMapelAktif().map(m => m.toLowerCase());
 
-      const pembaca = new FileReader();
-      pembaca.onload = e => {
-        const barisList = e.target.result.split(/\r?\n/).map(b => b.trim()).filter(Boolean);
-        const valid = [];
-        const errors = [];
+      try {
+        // 1. JIKA FILE WORD (.DOCX)
+        if (ekstensi === 'docx') {
+          if (typeof mammoth === 'undefined') {
+            tampilkanNotifikasi('Library pembaca Word belum termuat. Periksa koneksi internet.', 'error');
+            event.target.value = '';
+            return;
+          }
+          tampilkanNotifikasi('Membaca dokumen Word (.docx)...', 'info');
+          const arrayBuffer = await berkas.arrayBuffer();
+          const hasilWord = await mammoth.extractRawText({ arrayBuffer });
+          const hasilParse = parseTeksNaskahWordAtauPDF(hasilWord.value || '', mapelDefault, kelasDefault);
+          event.target.value = '';
+          bukaPratinjauImporSoal(hasilParse, `Dokumen Word (${namaFile}) • ${mapelDefault}`);
+          return;
+        }
 
-        barisList.forEach((baris, idx) => {
-          const kolom = parseBarisCSV(baris);
-          if (idx === 0 && kolom[0].toLowerCase() === 'tipe') return;
-          const noBaris = idx + 1;
+        // 2. JIKA FILE PDF (.PDF)
+        if (ekstensi === 'pdf') {
+          if (typeof pdfjsLib === 'undefined') {
+            tampilkanNotifikasi('Library pembaca PDF belum termuat. Periksa koneksi internet.', 'error');
+            event.target.value = '';
+            return;
+          }
+          tampilkanNotifikasi('Membaca dokumen PDF...', 'info');
+          pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+          const arrayBuffer = await berkas.arrayBuffer();
+          const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+          let seluruhTeksPDF = '';
 
-          if (kolom.length < 9) {
-            errors.push(`Baris ${noBaris}: Jumlah kolom kurang (${kolom.length} kolom, minimal 9 kolom).`);
+          for (let hal = 1; hal <= pdfDoc.numPages; hal++) {
+            const page = await pdfDoc.getPage(hal);
+            const textContent = await page.getTextContent();
+            let lastY = null;
+            let barisHalaman = '';
+            textContent.items.forEach(item => {
+              const y = item.transform ? item.transform[5] : null;
+              if (lastY !== null && y !== null && Math.abs(y - lastY) > 4) {
+                seluruhTeksPDF += barisHalaman.trim() + '\n';
+                barisHalaman = '';
+              }
+              barisHalaman += item.str + ' ';
+              lastY = y;
+            });
+            if (barisHalaman.trim()) seluruhTeksPDF += barisHalaman.trim() + '\n';
+          }
+
+          const hasilParse = parseTeksNaskahWordAtauPDF(seluruhTeksPDF, mapelDefault, kelasDefault);
+          event.target.value = '';
+          bukaPratinjauImporSoal(hasilParse, `Dokumen PDF (${namaFile}) • ${mapelDefault}`);
+          return;
+        }
+
+        // 3. JIKA FILE CSV / TXT
+        const daftarMapelDikenal = ambilDaftarMapelAktif().map(m => m.toLowerCase());
+        const pembaca = new FileReader();
+        pembaca.onload = e => {
+          const isiTeks = e.target.result || '';
+          const barisList = isiTeks.split(/\r?\n/).map(b => b.trim()).filter(Boolean);
+
+          // Jika file .txt berisi format Word bernomor (1. ... A. ... Kunci: B)
+          if (ekstensi === 'txt' && !barisList[0]?.includes(',')) {
+            const hasilParse = parseTeksNaskahWordAtauPDF(isiTeks, mapelDefault, kelasDefault);
+            event.target.value = '';
+            bukaPratinjauImporSoal(hasilParse, `File Teks (${namaFile}) • ${mapelDefault}`);
             return;
           }
 
-          const tipe = (kolom[0] || 'MCSA').trim().toUpperCase();
-          const mapelRaw = (kolom[1] || '').trim();
-          const kelasRaw = (kolom[2] || '').trim().toUpperCase();
-          const pertanyaan = (kolom[3] || '').trim();
-          const opsi = [kolom[4] || '', kolom[5] || '', kolom[6] || '', kolom[7] || ''].map(o => o.trim());
-          const kunciRaw = (kolom[8] || '').trim().toUpperCase();
+          const valid = [];
+          const errors = [];
 
-          if (!pertanyaan) {
-            errors.push(`Baris ${noBaris}: Pertanyaan kosong.`);
-            return;
-          }
-          if (opsi.some(o => !o)) {
-            errors.push(`Baris ${noBaris}: Terdapat opsi A/B/C/D yang kosong.`);
-            return;
-          }
-          if (!['SEMUA', 'VII', 'VIII', 'IX', '7', '8', '9'].includes(kelasRaw)) {
-            errors.push(`Baris ${noBaris}: Kelas "${kolom[2]}" tidak dikenal (gunakan VII, VIII, IX, atau SEMUA).`);
-            return;
-          }
-          if (mapelRaw && !daftarMapelDikenal.includes(mapelRaw.toLowerCase())) {
-            errors.push(`Baris ${noBaris}: Mapel "${mapelRaw}" belum terdaftar di daftar mapel.`);
-          }
+          barisList.forEach((baris, idx) => {
+            const kolom = parseBarisCSV(baris);
+            if (idx === 0 && kolom[0].toLowerCase() === 'tipe') return;
+            const noBaris = idx + 1;
 
-          const hurufList = kunciRaw.split(/[,;]/).map(k => k.trim()).filter(Boolean);
-          if (hurufList.length === 0 || hurufList.some(h => !['A', 'B', 'C', 'D'].includes(h))) {
-            errors.push(`Baris ${noBaris}: Kunci "${kolom[8]}" tidak valid (harus A, B, C, atau D).`);
-            return;
-          }
+            if (kolom.length < 9) {
+              errors.push(`Baris ${noBaris}: Jumlah kolom kurang (${kolom.length} kolom, minimal 9 kolom).`);
+              return;
+            }
 
-          const indeksKunciArr = hurufList.map(h => ['A', 'B', 'C', 'D'].indexOf(h));
-          valid.push({
-            id: 'S' + Date.now() + '_' + idx,
-            mapel: normalisasiNamaMapel(mapelRaw || mapelDefault),
-            kelas: normalisasiJenjangKelas(kelasRaw || kelasDefault),
-            tipe: tipe === 'MCMA' ? 'MCMA' : 'MCSA',
-            pertanyaan,
-            opsi,
-            kunci: tipe === 'MCMA' ? indeksKunciArr : indeksKunciArr[0],
-            teksArab: (kolom[9] || '').trim(),
-            stimulus: '',
-            pembahasan: (kolom[10] || '').trim(),
-            gambarSoal: ubahLinkGambarDrive(kolom[11] || ''),
-            gambarOpsi: [
-              ubahLinkGambarDrive(kolom[12] || ''),
-              ubahLinkGambarDrive(kolom[13] || ''),
-              ubahLinkGambarDrive(kolom[14] || ''),
-              ubahLinkGambarDrive(kolom[15] || '')
-            ]
+            const tipe = (kolom[0] || 'MCSA').trim().toUpperCase();
+            const mapelRaw = (kolom[1] || '').trim();
+            const kelasRaw = (kolom[2] || '').trim().toUpperCase();
+            const pertanyaan = (kolom[3] || '').trim();
+            const opsi = [kolom[4] || '', kolom[5] || '', kolom[6] || '', kolom[7] || ''].map(o => o.trim());
+            const kunciRaw = (kolom[8] || '').trim().toUpperCase();
+
+            if (!pertanyaan) {
+              errors.push(`Baris ${noBaris}: Pertanyaan kosong.`);
+              return;
+            }
+            if (opsi.some(o => !o)) {
+              errors.push(`Baris ${noBaris}: Terdapat opsi A/B/C/D yang kosong.`);
+              return;
+            }
+            if (!['SEMUA', 'VII', 'VIII', 'IX', '7', '8', '9'].includes(kelasRaw)) {
+              errors.push(`Baris ${noBaris}: Kelas "${kolom[2]}" tidak dikenal (gunakan VII, VIII, IX, atau SEMUA).`);
+              return;
+            }
+            if (mapelRaw && !daftarMapelDikenal.includes(mapelRaw.toLowerCase())) {
+              errors.push(`Baris ${noBaris}: Mapel "${mapelRaw}" belum terdaftar di daftar mapel.`);
+            }
+
+            const hurufList = kunciRaw.split(/[,;]/).map(k => k.trim()).filter(Boolean);
+            if (hurufList.length === 0 || hurufList.some(h => !['A', 'B', 'C', 'D'].includes(h))) {
+              errors.push(`Baris ${noBaris}: Kunci "${kolom[8]}" tidak valid (harus A, B, C, atau D).`);
+              return;
+            }
+
+            const indeksKunciArr = hurufList.map(h => ['A', 'B', 'C', 'D'].indexOf(h));
+            valid.push({
+              id: 'S' + Date.now() + '_' + idx,
+              mapel: normalisasiNamaMapel(mapelRaw || mapelDefault),
+              kelas: normalisasiJenjangKelas(kelasRaw || kelasDefault),
+              tipe: tipe === 'MCMA' ? 'MCMA' : 'MCSA',
+              pertanyaan,
+              opsi,
+              kunci: tipe === 'MCMA' ? indeksKunciArr : indeksKunciArr[0],
+              teksArab: (kolom[9] || '').trim(),
+              stimulus: '',
+              pembahasan: (kolom[10] || '').trim(),
+              gambarSoal: ubahLinkGambarDrive(kolom[11] || ''),
+              gambarOpsi: [
+                ubahLinkGambarDrive(kolom[12] || ''),
+                ubahLinkGambarDrive(kolom[13] || ''),
+                ubahLinkGambarDrive(kolom[14] || ''),
+                ubahLinkGambarDrive(kolom[15] || '')
+              ]
+            });
           });
-        });
 
+          event.target.value = '';
+          bukaPratinjauImporSoal({ valid, errors }, `File CSV (${namaFile})`);
+        };
+        pembaca.readAsText(berkas);
+      } catch (err) {
         event.target.value = '';
-        bukaPratinjauImporSoal({ valid, errors }, `File CSV (${berkas.name})`);
-      };
-      pembaca.readAsText(berkas);
+        tampilkanNotifikasi('Gagal membaca file. Pastikan file Word (.docx) atau PDF tidak terproteksi sandi.', 'error');
+      }
     }
 
     function prosesTempelSoalMassal() {
