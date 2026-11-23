@@ -104,13 +104,13 @@
     </div>
   </div>
 
-  <!-- Input tersembunyi untuk unggah foto siswa satuan -->
+  <!-- Input tersembunyi untuk unggah foto siswa satuan (khusus proktor) -->
   <input type="file" id="input-unggah-foto-siswa" accept="image/*" class="hidden" onchange="prosesUnggahFotoSiswa(event)" />
 
-  <!-- Input tersembunyi untuk unggah logo madrasah -->
+  <!-- Input tersembunyi untuk unggah logo madrasah (khusus proktor) -->
   <input type="file" id="input-unggah-logo-madrasah" accept="image/*" class="hidden" onchange="prosesUnggahLogoMadrasah(event)" />
 
-  <!-- ==================== HALAMAN 1: LOGIN PESERTA & PENGAWAS ==================== -->
+  <!-- ==================== HALAMAN 1: LOGIN PESERTA & PROKTOR ==================== -->
   <div id="halaman-login" class="flex-1 flex flex-col justify-between min-h-screen bg-gradient-to-br from-madrasah-900 via-madrasah-800 to-slate-900 text-white">
     <header class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-wrap items-center justify-between gap-4">
       <div class="flex items-center gap-3.5">
@@ -148,33 +148,9 @@
             <h2 id="login-judul-ujian" class="text-2xl sm:text-3xl font-extrabold leading-tight text-white mb-2">
               Asesmen Sumatif Akhir Semester (ASAS)
             </h2>
-            <p id="login-nama-mapel" class="text-emerald-200 font-semibold text-sm sm:text-base mb-4">
+            <p id="login-nama-mapel" class="text-emerald-200 font-semibold text-sm sm:text-base mb-5">
               Mata Pelajaran: Semua Mata Pelajaran MTs • Tahun Pelajaran 2026/2027
             </p>
-
-            <!-- Pemilih Cepat Mata Pelajaran di Halaman Depan -->
-            <div class="mb-5 p-3.5 rounded-2xl bg-slate-950/45 border border-white/15">
-              <label for="login-pilih-mapel-cepat" class="block text-[11px] font-bold uppercase tracking-wider text-amber-300 mb-1.5">
-                Pilih Mata Pelajaran Ujian Aktif:
-              </label>
-              <select id="login-pilih-mapel-cepat" onchange="ubahMapelCepatDariLogin(this.value)" class="w-full px-3.5 py-2.5 rounded-xl bg-white text-slate-900 text-xs sm:text-sm font-extrabold outline-none focus:ring-2 focus:ring-amber-400">
-                <option value="Semua Mata Pelajaran MTs">Semua Mata Pelajaran MTs (Umum)</option>
-                <option value="Fikih">Fikih</option>
-                <option value="Sejarah Kebudayaan Islam (SKI)">Sejarah Kebudayaan Islam (SKI)</option>
-                <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                <option value="Bahasa Arab">Bahasa Arab</option>
-                <option value="Al-Qur'an Hadis">Al-Qur'an Hadis</option>
-                <option value="Akidah Akhlak">Akidah Akhlak</option>
-                <option value="Matematika">Matematika</option>
-                <option value="Ilmu Pengetahuan Alam (IPA)">Ilmu Pengetahuan Alam (IPA)</option>
-                <option value="Ilmu Pengetahuan Sosial (IPS)">Ilmu Pengetahuan Sosial (IPS)</option>
-                <option value="Bahasa Inggris">Bahasa Inggris</option>
-                <option value="PKn / Pendidikan Pancasila">PKn / Pendidikan Pancasila</option>
-                <option value="Seni Budaya">Seni Budaya</option>
-                <option value="PJOK">PJOK</option>
-                <option value="Informatika / Prakarya">Informatika / Prakarya</option>
-              </select>
-            </div>
 
             <div class="grid grid-cols-3 gap-3 mb-6">
               <div class="bg-slate-950/40 border border-white/10 rounded-2xl p-3.5 text-center">
@@ -198,19 +174,19 @@
               <ul class="space-y-2 text-xs sm:text-sm text-slate-200 leading-relaxed">
                 <li><strong>1.</strong> Urutan nomor soal dan pilihan jawaban <strong>A, B, C, D</strong> diacak otomatis per siswa, dan tetap konsisten saat halaman dimuat ulang.</li>
                 <li><strong>2.</strong> Dilarang berpindah tab, membuka layar terbelah (<em>split-screen</em>), klik kanan, atau menyalin/menempel teks.</li>
-                <li><strong>3.</strong> Jika pelanggaran mencapai batas maksimal, akun peserta akan terkunci otomatis hingga dibuka oleh pengawas.</li>
-                <li><strong>4.</strong> Aplikasi tidak menggunakan kamera/webcam sehingga ringan dan hemat baterai untuk 150 siswa.</li>
+                <li><strong>3.</strong> Jika pelanggaran mencapai batas maksimal, akun peserta akan terkunci otomatis hingga dibuka oleh proktor.</li>
+                <li><strong>4.</strong> Seluruh pengaturan, data peserta, dan bank soal hanya dapat diubah oleh proktor resmi.</li>
               </ul>
             </div>
           </div>
 
           <div class="mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs text-emerald-200/80">
-            <span>Guru / Pengawas: <strong id="login-nama-guru" class="text-white">Sukri Abadi, S.Pd</strong></span>
-            <span id="login-email-guru">gagiksukri@gmail.com</span>
+            <span>Proktor / Guru: <strong id="login-nama-guru" class="text-white">Sukri Abadi, S.Pd</strong></span>
+            <span>Mode Akses Terkendali Proktor</span>
           </div>
         </div>
 
-        <!-- Kolom Kanan: Form Login Siswa & Pengawas -->
+        <!-- Kolom Kanan: Form Login Siswa & Proktor -->
         <div class="lg:col-span-6 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col justify-between relative z-20">
           <div>
             <!-- Pilihan Peran Login -->
@@ -219,51 +195,41 @@
                 Peserta Ujian (Siswa)
               </button>
               <button type="button" id="tab-login-guru" onclick="gantiTabLogin('guru')" class="py-2.5 px-4 rounded-xl text-sm font-bold transition text-slate-500 hover:text-slate-800 cursor-pointer">
-                Pengawas &amp; Guru
+                Proktor &amp; Guru
               </button>
             </div>
 
             <!-- Form Login Siswa -->
             <form id="form-login-siswa" onsubmit="prosesLoginSiswa(event)" class="space-y-4">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <h3 class="text-xl font-extrabold text-slate-900">Login Peserta Ujian</h3>
-                  <p class="text-xs text-slate-500 mt-0.5">Pilih nama atau ketik NISN, kata sandi, dan token dari pengawas.</p>
-                </div>
-                <button type="button" onclick="isiAkunUjiCobaSiswa()" class="px-3 py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-950 text-xs font-extrabold border border-amber-300 transition cursor-pointer">
-                  Isi Akun Uji Coba Siswa
-                </button>
-              </div>
-
-              <!-- Kartu Pratinjau Foto & Identitas Siswa (Selalu Tampil & Sinkron Real-Time) -->
-              <div id="pratinjau-profil-login" class="p-3.5 rounded-2xl bg-gradient-to-r from-madrasah-50 to-emerald-50/70 border border-madrasah-200 flex items-center justify-between gap-3 shadow-2xs">
-                <div class="flex items-center gap-3.5 min-w-0">
-                  <div id="pratinjau-avatar-login" class="w-14 h-14 rounded-2xl overflow-hidden shrink-0 border-2 border-madrasah-500 bg-madrasah-700 text-white flex items-center justify-center font-extrabold text-base shadow-xs">
-                    <span>PS</span>
-                  </div>
-                  <div class="min-w-0">
-                    <span class="inline-block px-2 py-0.5 rounded-md bg-madrasah-600/10 text-madrasah-800 text-[10px] font-extrabold uppercase tracking-wider mb-0.5">Identitas Peserta</span>
-                    <p id="pratinjau-nama-login" class="text-sm font-extrabold text-slate-900 truncate">Belum Memilih Peserta</p>
-                    <p id="pratinjau-kelas-login" class="text-xs font-semibold text-madrasah-700 truncate">Pilih nama di bawah atau ketik NISN</p>
-                  </div>
-                </div>
-                <button type="button" id="btn-unggah-foto-login" onclick="bukaUnggahFoto(document.getElementById('login-nisn').value.trim())" class="hidden px-3 py-2 rounded-xl bg-white hover:bg-slate-100 border border-madrasah-300 text-madrasah-800 text-xs font-bold shrink-0 shadow-2xs cursor-pointer">
-                  Ganti Foto
-                </button>
-              </div>
-
-              <!-- Dropdown Pilih / Ubah Nama Siswa -->
               <div>
-                <label for="login-pilih-nama-siswa" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Pilih / Ubah Nama Siswa (Cari Cepat)</label>
-                <select id="login-pilih-nama-siswa" onchange="pilihSiswaDariDropdownLogin(this.value)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-madrasah-600 focus:ring-4 focus:ring-madrasah-600/10 outline-none text-xs sm:text-sm font-bold bg-slate-50 text-slate-800">
-                  <option value="">-- Pilih Nama Peserta atau Ketik NISN di Bawah --</option>
+                <h3 class="text-xl font-extrabold text-slate-900">Login Peserta Ujian</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Pilih nama Anda pada daftar, masukkan NISN, kata sandi, dan token dari proktor.</p>
+              </div>
+
+              <!-- Kartu Pratinjau Foto & Nama Siswa -->
+              <div id="pratinjau-profil-login" class="p-3.5 rounded-2xl bg-gradient-to-r from-madrasah-50 to-emerald-50/70 border border-madrasah-200 flex items-center gap-3.5 shadow-2xs">
+                <div id="pratinjau-avatar-login" class="w-14 h-14 rounded-2xl overflow-hidden shrink-0 border-2 border-madrasah-500 bg-madrasah-700 text-white flex items-center justify-center font-extrabold text-base shadow-xs">
+                  <span>PS</span>
+                </div>
+                <div class="min-w-0">
+                  <span class="inline-block px-2 py-0.5 rounded-md bg-madrasah-600/10 text-madrasah-800 text-[10px] font-extrabold uppercase tracking-wider mb-0.5">Identitas Peserta</span>
+                  <p id="pratinjau-nama-login" class="text-sm font-extrabold text-slate-900 truncate">Belum Memilih Nama</p>
+                  <p id="pratinjau-kelas-login" class="text-xs font-semibold text-madrasah-700 truncate">Silakan pilih nama pada pilihan di bawah</p>
+                </div>
+              </div>
+
+              <!-- Dropdown Pilih Nama Siswa (Hanya Nama Saja, Tanpa NISN/Kelas di Pilihan) -->
+              <div>
+                <label for="login-pilih-nama-siswa" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Pilih Nama Peserta</label>
+                <select id="login-pilih-nama-siswa" onchange="pilihSiswaDariDropdownLogin(this.value)" class="w-full px-3.5 py-3 rounded-xl border border-slate-200 focus:border-madrasah-600 focus:ring-4 focus:ring-madrasah-600/10 outline-none text-xs sm:text-sm font-bold bg-slate-50 text-slate-800">
+                  <option value="">-- Pilih Nama Peserta --</option>
                 </select>
               </div>
 
               <!-- Input NISN -->
               <div>
                 <label for="login-nisn" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">NISN Peserta</label>
-                <input type="text" id="login-nisn" oninput="perbaruiPratinjauLogin()" required placeholder="Contoh: 0091000001" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-madrasah-600 focus:ring-4 focus:ring-madrasah-600/10 outline-none text-sm font-mono font-bold tracking-wide" />
+                <input type="text" id="login-nisn" oninput="perbaruiPratinjauLogin()" required placeholder="Ketik NISN Anda" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-madrasah-600 focus:ring-4 focus:ring-madrasah-600/10 outline-none text-sm font-mono font-bold tracking-wide" />
               </div>
 
               <!-- Input Kata Sandi dengan Tombol Lihat Password (Ikon Mata) -->
@@ -281,11 +247,11 @@
                 </div>
               </div>
 
-              <!-- Input Token Ujian (Bersih Tanpa Bocoran Token) -->
+              <!-- Input Token Ujian -->
               <div>
                 <div class="flex items-center justify-between mb-1.5">
                   <label for="login-token" class="block text-xs font-bold uppercase tracking-wider text-slate-600">Token Ujian</label>
-                  <span class="text-[11px] font-semibold text-slate-500">Minta kode token kepada pengawas ruang</span>
+                  <span class="text-[11px] font-semibold text-slate-500">Minta token kepada proktor ruang</span>
                 </div>
                 <input type="text" id="login-token" required placeholder="Masukkan token ujian" autocomplete="off" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-madrasah-600 focus:ring-4 focus:ring-madrasah-600/10 outline-none text-sm font-extrabold uppercase tracking-widest" />
               </div>
@@ -295,41 +261,36 @@
               </button>
             </form>
 
-            <!-- Form Login Pengawas / Guru -->
+            <!-- Form Login Proktor / Guru -->
             <form id="form-login-guru" onsubmit="prosesLoginGuru(event)" class="space-y-4 hidden">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <h3 class="text-xl font-extrabold text-slate-900">Login Pengawas &amp; Guru</h3>
-                  <p class="text-xs text-slate-500 mt-0.5">Kelola 150 peserta, foto siswa, bank soal, nilai, dan berita acara.</p>
-                </div>
-                <button type="button" onclick="isiAkunUjiCobaPengawas()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shadow-xs transition cursor-pointer">
-                  Isi Akun Uji Coba Pengawas (1-Klik)
-                </button>
+              <div>
+                <h3 class="text-xl font-extrabold text-slate-900">Login Proktor &amp; Guru</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Akses khusus proktor untuk mengelola peserta, foto siswa, bank soal, nilai, dan pengaturan.</p>
               </div>
 
               <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Email / ID Pengawas</label>
-                <input type="text" id="guru-user" value="gagiksukri@gmail.com" placeholder="gagiksukri@gmail.com" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-madrasah-600 focus:ring-4 focus:ring-madrasah-600/10 outline-none text-sm font-medium" />
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">ID / Email Proktor</label>
+                <input type="text" id="guru-user" placeholder="Masukkan ID atau email proktor" autocomplete="off" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-madrasah-600 focus:ring-4 focus:ring-madrasah-600/10 outline-none text-sm font-medium" />
               </div>
 
               <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Kata Sandi</label>
-                <input type="password" id="guru-sandi" value="guru123" placeholder="guru123" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-madrasah-600 focus:ring-4 focus:ring-madrasah-600/10 outline-none text-sm font-medium" />
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Kata Sandi Proktor</label>
+                <input type="password" id="guru-sandi" placeholder="Masukkan kata sandi proktor" autocomplete="off" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-madrasah-600 focus:ring-4 focus:ring-madrasah-600/10 outline-none text-sm font-medium" />
               </div>
 
               <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
-                Akun bawaan: Email/ID Pengawas <strong>gagiksukri@gmail.com</strong> (atau <strong>guru</strong>) • Kata sandi <strong>guru123</strong>.
+                Informasi kredensial proktor dirahasiakan dan hanya diberikan kepada proktor yang bertugas.
               </div>
 
               <button type="submit" class="w-full py-3.5 px-5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-lg transition cursor-pointer">
-                Masuk ke Panel Pengawas
+                Masuk ke Panel Proktor
               </button>
             </form>
           </div>
 
           <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-            <span>Penyimpanan Lokal Aman (150 Siswa)</span>
-            <button type="button" onclick="resetDataBawaan()" class="text-rose-600 hover:underline font-semibold">Pulihkan Data Bawaan</button>
+            <span>Penyimpanan Lokal Aman (Peserta Tak Terbatas)</span>
+            <span>Perubahan data hanya oleh Proktor</span>
           </div>
         </div>
 
@@ -337,14 +298,14 @@
     </main>
 
     <footer class="py-4 text-center text-xs text-emerald-200/70">
-      MTs Syafi'iyyah Ngaringan • Sukri Abadi, S.Pd (gagiksukri@gmail.com)
+      MTs Syafi'iyyah Ngaringan • Sistem CBT Pro Terkendali Proktor
     </footer>
   </div>
 
   <!-- ==================== HALAMAN 2: RUANG UJIAN SISWA ==================== -->
   <div id="halaman-ujian" class="hidden flex-col min-h-screen bg-slate-100 kunci-seleksi">
 
-    <!-- Spanduk Pengumuman Langsung dari Pengawas -->
+    <!-- Spanduk Pengumuman Langsung dari Proktor -->
     <div id="spanduk-pengumuman" class="hidden bg-amber-400 text-slate-950 border-b border-amber-500 px-4 py-2 text-xs sm:text-sm font-bold text-center">
       <span id="teks-pengumuman"></span>
     </div>
@@ -590,7 +551,7 @@
     </main>
   </div>
 
-  <!-- ==================== HALAMAN 4: PANEL PENGAWAS & GURU ==================== -->
+  <!-- ==================== HALAMAN 4: PANEL PROKTOR & GURU ==================== -->
   <div id="halaman-guru" class="hidden flex-col min-h-screen bg-slate-100">
     <header class="bg-slate-900 text-white sticky top-0 z-30 shadow-md">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
@@ -598,10 +559,10 @@
           <div id="wadah-logo-guru" class="w-11 h-11 rounded-xl bg-white p-1 border border-slate-700 flex items-center justify-center overflow-hidden shrink-0"></div>
           <div>
             <div class="flex flex-wrap items-center gap-2">
-              <h1 class="text-sm sm:text-base font-extrabold">Panel Pengawas &amp; Guru — MTs Syafi'iyyah Ngaringan</h1>
+              <h1 class="text-sm sm:text-base font-extrabold">Panel Proktor &amp; Guru — MTs Syafi'iyyah Ngaringan</h1>
               <span id="guru-lencana-tapel" class="px-2 py-0.5 text-[10px] font-bold bg-amber-400/20 text-amber-300 rounded-md border border-amber-400/30">TP 2026/2027</span>
             </div>
-            <p class="text-xs text-slate-400">Pengawas: <strong class="text-slate-200" id="guru-nama-aktif">Sukri Abadi, S.Pd</strong> • <span id="guru-email-aktif">gagiksukri@gmail.com</span></p>
+            <p class="text-xs text-slate-400">Proktor Aktif: <strong class="text-slate-200" id="guru-nama-aktif">Sukri Abadi, S.Pd</strong> • <span class="text-emerald-300 font-semibold">Sesi Proktor Terverifikasi</span></p>
           </div>
         </div>
 
@@ -610,17 +571,17 @@
             <span class="text-slate-400">Token:</span>
             <strong id="guru-token-aktif" class="font-mono text-amber-400 tracking-wider ml-1">MTS2026</strong>
           </div>
-          <button type="button" onclick="kembaliKeLogin()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition">
-            Keluar / Uji Siswa
+          <button type="button" onclick="keluarSesiProktor()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition">
+            Keluar Proktor
           </button>
         </div>
       </div>
 
-      <!-- Menu Tab Pengawas -->
+      <!-- Menu Tab Proktor -->
       <div class="bg-slate-800 border-t border-slate-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex overflow-x-auto gap-1 py-1.5">
           <button type="button" onclick="gantiTabGuru('pantau')" id="tab-guru-pantau" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-madrasah-600 text-white whitespace-nowrap">
-            1. Pantau Peserta (150)
+            1. Pantau Peserta
           </button>
           <button type="button" onclick="gantiTabGuru('soal')" id="tab-guru-soal" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-slate-700 whitespace-nowrap">
             2. Bank Soal &amp; Unggah
@@ -647,7 +608,7 @@
       <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
         <div class="bg-white p-4 rounded-2xl border border-slate-200">
           <p class="text-[11px] font-bold text-slate-400 uppercase">Total Peserta (Tak Terbatas)</p>
-          <p id="kpi-total" class="text-2xl font-extrabold text-slate-900 mt-1">150</p>
+          <p id="kpi-total" class="text-2xl font-extrabold text-slate-900 mt-1">0</p>
         </div>
         <div class="bg-white p-4 rounded-2xl border border-slate-200">
           <p class="text-[11px] font-bold text-sky-600 uppercase">Sedang Mengerjakan</p>
@@ -715,7 +676,7 @@
                   <th class="py-3 px-4">Status</th>
                   <th class="py-3 px-4">Progres Soal</th>
                   <th class="py-3 px-4">Pelanggaran</th>
-                  <th class="py-3 px-5 text-right">Aksi Pengawas</th>
+                  <th class="py-3 px-5 text-right">Aksi Proktor</th>
                 </tr>
               </thead>
               <tbody id="tbody-pantau-siswa" class="divide-y divide-slate-100 text-sm"></tbody>
@@ -735,7 +696,6 @@
 
       <!-- TAB 2: BANK SOAL & UNGGAH SOAL MASSAL -->
       <section id="panel-guru-soal" class="hidden space-y-6">
-        <!-- Unggah Soal Massal (File CSV & Tempel Teks Massal) -->
         <div class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
             <div>
@@ -824,11 +784,10 @@
 
       <!-- TAB 3: FOTO SISWA, IMPOR MASSAL PESERTA & CETAK KARTU -->
       <section id="panel-guru-siswa" class="hidden space-y-6">
-        <!-- Pengelolaan Foto Siswa -->
         <div class="bg-white rounded-3xl border border-slate-200 p-6 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
             <div>
-              <h2 class="text-lg font-extrabold text-slate-900">Pengelolaan Foto Siswa</h2>
+              <h2 class="text-lg font-extrabold text-slate-900">Pengelolaan Foto Siswa (Khusus Proktor)</h2>
               <p class="text-xs text-slate-500">Isi tautan foto (Google Drive / URL), unggah foto langsung, atau biarkan kosong agar memakai inisial nama otomatis.</p>
             </div>
             <input type="text" id="cari-foto-siswa" oninput="renderDaftarFotoSiswa()" placeholder="Cari NISN / nama siswa..." class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs outline-none focus:border-madrasah-600" />
@@ -837,16 +796,20 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          <!-- Impor Massal Peserta -->
           <div class="lg:col-span-6 bg-white rounded-3xl border border-slate-200 p-6 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <h2 class="text-lg font-extrabold text-slate-900">Kelola &amp; Impor Massal Peserta (Tak Terbatas)</h2>
                 <p class="text-xs text-slate-500 mt-0.5">Format tiap baris: <code class="bg-slate-100 px-1.5 py-0.5 rounded font-bold">NISN, Nama Lengkap, Kelas, Sandi, TautanFoto(Opsional)</code></p>
               </div>
-              <button type="button" onclick="hapusSemuaPeserta()" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-xs font-extrabold">
-                Hapus Semua Siswa
-              </button>
+              <div class="flex flex-wrap items-center gap-2">
+                <button type="button" id="btn-tambah-siswa-baru" onclick="bukaFormTambahSiswaCepat()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shadow-xs cursor-pointer">
+                  + Tambah Siswa
+                </button>
+                <button type="button" id="btn-hapus-semua-siswa" onclick="hapusSemuaPeserta()" class="px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-xs font-extrabold cursor-pointer">
+                  Hapus Semua Siswa
+                </button>
+              </div>
             </div>
             <textarea id="teks-impor-siswa" rows="5" placeholder="0091000151, Muhammad Hafidz, IX-A, 123456&#10;0091000152, Nafisah Azzahra, IX-B, 123456" class="w-full p-3.5 rounded-2xl border border-slate-200 bg-slate-50 text-xs font-mono outline-none focus:border-madrasah-600"></textarea>
             <div class="flex flex-wrap items-center justify-between gap-2">
@@ -859,7 +822,6 @@
               </button>
             </div>
 
-            <!-- Daftar Siswa Aktif dengan Tombol Hapus Satuan -->
             <div class="pt-3 border-t border-slate-100 space-y-2">
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <span class="text-xs font-extrabold text-slate-700">Daftar Peserta Tersimpan (<span id="jumlah-peserta-tersimpan">0</span>)</span>
@@ -869,7 +831,6 @@
             </div>
           </div>
 
-          <!-- Cetak Kartu Peserta -->
           <div class="lg:col-span-6 bg-white rounded-3xl border border-slate-200 p-6 space-y-4">
             <div>
               <h2 class="text-lg font-extrabold text-slate-900">Cetak Kartu Peserta Ujian</h2>
@@ -878,13 +839,10 @@
             <div class="p-4 rounded-2xl bg-madrasah-50 border border-madrasah-200 space-y-3">
               <label class="block text-xs font-bold text-madrasah-900">Pilih Kelas Kartu Peserta:</label>
               <select id="kelas-cetak-kartu" class="w-full px-3.5 py-2.5 rounded-xl border border-madrasah-200 bg-white text-xs font-bold">
-                <option value="SEMUA">Semua Kelas (150 Peserta)</option>
-                <option value="VII-A">Kelas VII-A</option>
-                <option value="VII-B">Kelas VII-B</option>
-                <option value="VIII-A">Kelas VIII-A</option>
-                <option value="VIII-B">Kelas VIII-B</option>
-                <option value="IX-A">Kelas IX-A</option>
-                <option value="IX-B">Kelas IX-B</option>
+                <option value="SEMUA">Semua Kelas</option>
+                <option value="VII">Kelas VII</option>
+                <option value="VIII">Kelas VIII</option>
+                <option value="IX">Kelas IX</option>
               </select>
               <button type="button" onclick="cetakKartuPeserta()" class="w-full py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold">
                 Cetak / Simpan PDF Kartu Peserta
@@ -952,7 +910,7 @@
           <div class="lg:col-span-5 bg-white rounded-3xl border border-slate-200 p-6 space-y-4">
             <h2 class="text-lg font-extrabold text-slate-900">Isian Berita Acara Pelaksanaan (BAP)</h2>
             <div>
-              <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Nama Pengawas / Proktor</label>
+              <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Nama Proktor / Pengawas</label>
               <input type="text" id="bap-pengawas" oninput="renderPratinjauBAP()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-medium" />
             </div>
             <div>
@@ -974,16 +932,20 @@
         </div>
       </section>
 
-      <!-- TAB 6: PENGATURAN UJIAN (5 TAHUN KE DEPAN & MAPEL MTs LENGKAP) -->
+      <!-- TAB 6: PENGATURAN UJIAN (KHUSUS PROKTOR) -->
       <section id="panel-guru-pengaturan" class="hidden">
         <div class="max-w-3xl bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 space-y-5">
-          <div>
-            <h2 class="text-xl font-extrabold text-slate-900">Pengaturan Ujian (Siap Pakai 5 Tahun Ke Depan)</h2>
-            <p class="text-xs text-slate-500 mt-0.5">Atur tahun pelajaran, mata pelajaran lengkap MTs, token, durasi, batas pelanggaran, dan pengacakan soal/pilihan.</p>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h2 class="text-xl font-extrabold text-slate-900">Pengaturan Ujian (Khusus Proktor)</h2>
+              <p class="text-xs text-slate-500 mt-0.5">Atur tahun pelajaran, mata pelajaran lengkap MTs, token, durasi, batas pelanggaran, dan pengacakan soal/pilihan.</p>
+            </div>
+            <button type="button" onclick="resetDataBawaan()" class="px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-xs font-extrabold cursor-pointer">
+              Reset &amp; Kosongkan Siswa
+            </button>
           </div>
 
           <form onsubmit="prosesSimpanPengaturan(event)" class="space-y-4">
-            <!-- Pengaturan Logo Madrasah -->
             <div class="p-4 rounded-2xl bg-madrasah-50/70 border border-madrasah-200 flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div id="pratinjau-logo-pengaturan" class="w-16 h-16 rounded-2xl bg-white p-1.5 border border-madrasah-300 flex items-center justify-center overflow-hidden shrink-0"></div>
               <div class="flex-1 w-full space-y-2">
@@ -1026,20 +988,33 @@
                 <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5">Mata Pelajaran (MTs)</label>
                 <select id="atur-mapel-pilihan" onchange="toggleInputMapelLainnya()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold bg-white">
                   <option value="Semua Mata Pelajaran MTs">Semua Mata Pelajaran MTs (Umum)</option>
-                  <option value="Fikih">Fikih</option>
-                  <option value="Sejarah Kebudayaan Islam (SKI)">Sejarah Kebudayaan Islam (SKI)</option>
-                  <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                  <option value="Abi sujak">Abi sujak</option>
+                  <option value="Akidah">Akidah</option>
+                  <option value="Aqidatul awam">Aqidatul awam</option>
+                  <option value="Arbain Nawawi">Arbain Nawawi</option>
+                  <option value="Ayuhal Walad">Ayuhal Walad</option>
+                  <option value="Badiul Amal">Badiul Amal</option>
                   <option value="Bahasa Arab">Bahasa Arab</option>
-                  <option value="Al-Qur'an Hadis">Al-Qur'an Hadis</option>
-                  <option value="Akidah Akhlak">Akidah Akhlak</option>
-                  <option value="Matematika">Matematika</option>
-                  <option value="Ilmu Pengetahuan Alam (IPA)">Ilmu Pengetahuan Alam (IPA)</option>
-                  <option value="Ilmu Pengetahuan Sosial (IPS)">Ilmu Pengetahuan Sosial (IPS)</option>
+                  <option value="Bahasa indonesia">Bahasa indonesia</option>
                   <option value="Bahasa Inggris">Bahasa Inggris</option>
-                  <option value="PKn / Pendidikan Pancasila">PKn / Pendidikan Pancasila</option>
-                  <option value="Seni Budaya">Seni Budaya</option>
-                  <option value="PJOK">PJOK</option>
-                  <option value="Informatika / Prakarya">Informatika / Prakarya</option>
+                  <option value="Bahasa Jawa">Bahasa Jawa</option>
+                  <option value="Fiqih">Fiqih</option>
+                  <option value="Informatika">Informatika</option>
+                  <option value="IPA">IPA</option>
+                  <option value="IPS">IPS</option>
+                  <option value="Jurumiyah/mandhumah">Jurumiyah/mandhumah</option>
+                  <option value="Ke NU an">Ke NU an</option>
+                  <option value="Kholasoh">Kholasoh</option>
+                  <option value="Khoridah">Khoridah</option>
+                  <option value="Majmu' Latif dan Tajwid">Majmu' Latif dan Tajwid</option>
+                  <option value="Matematika">Matematika</option>
+                  <option value="Olah Raga">Olah Raga</option>
+                  <option value="PKN">PKN</option>
+                  <option value="Qur'an hadist">Qur'an hadist</option>
+                  <option value="Seni Budaya/Prakarya">Seni Budaya/Prakarya</option>
+                  <option value="Shorof dan Amsilah">Shorof dan Amsilah</option>
+                  <option value="SKI">SKI</option>
+                  <option value="Taesirul kholaq">Taesirul kholaq</option>
                   <option value="LAINNYA">Mata Pelajaran Lainnya</option>
                 </select>
               </div>
@@ -1085,7 +1060,6 @@
               </label>
             </div>
 
-            <!-- Integrasi Google Spreadsheet (Web App URL) -->
             <div class="p-4 rounded-2xl bg-sky-50 border border-sky-200 space-y-2.5">
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <label for="atur-url-spreadsheet" class="block text-xs font-extrabold uppercase text-sky-950">
@@ -1097,7 +1071,7 @@
               </div>
               <input type="url" id="atur-url-spreadsheet" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="w-full px-3.5 py-2.5 rounded-xl border border-sky-300 bg-white text-xs font-mono outline-none focus:border-sky-700" />
               <p class="text-[11px] text-sky-900 leading-relaxed">
-                Tempelkan URL <strong>Web App</strong> hasil <em>Deploy</em> dari Google Apps Script di Spreadsheet Bapak. Jika dikosongkan, aplikasi tetap berjalan lancar secara lokal tanpa error.
+                Tempelkan URL <strong>Web App</strong> hasil <em>Deploy</em> dari Google Apps Script di Spreadsheet. Jika dikosongkan, aplikasi tetap berjalan lancar secara lokal tanpa error.
               </p>
             </div>
 
@@ -1114,27 +1088,45 @@
 
   <!-- ==================== JAVASCRIPT APLIKASI ==================== -->
   <script>
-    const KUNCI_PENYIMPANAN = 'cbt_pro_mts_syafiiyyah_ngaringan_v2';
+    const KUNCI_PENYIMPANAN = 'cbt_pro_mts_syafiiyyah_ngaringan_v3';
 
     const DAFTAR_MAPEL_MTS = [
       'Semua Mata Pelajaran MTs',
-      'Fikih',
-      'Sejarah Kebudayaan Islam (SKI)',
-      'Bahasa Indonesia',
+      'Abi sujak',
+      'Akidah',
+      'Aqidatul awam',
+      'Arbain Nawawi',
+      'Ayuhal Walad',
+      'Badiul Amal',
       'Bahasa Arab',
-      "Al-Qur'an Hadis",
-      'Akidah Akhlak',
-      'Matematika',
-      'Ilmu Pengetahuan Alam (IPA)',
-      'Ilmu Pengetahuan Sosial (IPS)',
+      'Bahasa indonesia',
       'Bahasa Inggris',
-      'PKn / Pendidikan Pancasila',
-      'Seni Budaya',
-      'PJOK',
-      'Informatika / Prakarya'
+      'Bahasa Jawa',
+      'Fiqih',
+      'Informatika',
+      'IPA',
+      'IPS',
+      'Jurumiyah/mandhumah',
+      'Ke NU an',
+      'Kholasoh',
+      'Khoridah',
+      "Majmu' Latif dan Tajwid",
+      'Matematika',
+      'Olah Raga',
+      'PKN',
+      "Qur'an hadist",
+      'Seni Budaya/Prakarya',
+      'Shorof dan Amsilah',
+      'SKI',
+      'Taesirul kholaq'
     ];
 
     const LOGO_DEFAULT_DRIVE = 'https://drive.google.com/file/d/189dKYnKje8v_yTkriutoCd_rhRiIXhtK/view?usp=sharing';
+    const URL_SPREADSHEET_BAWAAN = 'https://script.google.com/macros/s/AKfycby1AZyyQG5g-Y_JzWW8gPP2BvZ4pLTNVDd_lLVHqAbB5WR1K9xCu0_QipIcgbKOemAi/exec';
+    const KREDENSIAL_PROKTOR = {
+      id: 'proktor',
+      sandi: 'proktor123'
+    };
 
     const PENGATURAN_BAWAAN = {
       tahunPelajaran: '2026/2027',
@@ -1145,9 +1137,8 @@
       batasPelanggaran: 5,
       kkm: 75,
       namaGuru: 'Sukri Abadi, S.Pd',
-      emailGuru: 'gagiksukri@gmail.com',
       logoMadrasah: LOGO_DEFAULT_DRIVE,
-      urlSpreadsheet: '',
+      urlSpreadsheet: URL_SPREADSHEET_BAWAAN,
       acakSoal: true,
       acakOpsi: true,
       tampilkanFoto: true
@@ -1259,75 +1250,83 @@
       }
     ];
 
-    function buat150PesertaSimulasi() {
-      const namaDepan = [
-        'Ahmad', 'Muhammad', 'Siti', 'Nurul', 'Aisyah', 'Dimas', 'Rizqi', 'Fatimah', 'Bagus', 'Zahra',
-        'Fajar', 'Nabila', 'Ilham', 'Putri', 'Wahyu', 'Dewi', 'Arif', 'Anisa', 'Rafi', 'Salma',
-        'Hendra', 'Fitri', 'Lukman', 'Rahma', 'Yoga', 'Intan', 'Zainal', 'Lutfia', 'Adi', 'Melati'
+    function buatPesertaAwal() {
+      return [
+        { nisn: '0143161814', nama: 'ADEEVA AFSHEEN MYESHA', kelas: 'VII', sandi: '0143161814', fotoUrl: 'https://drive.google.com/file/d/1hDCB-O6BL2OaHFlKaU4sVxvfykFXw7Mh/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '3144576038', nama: 'AGISNA NUGRAHANINGTYAS', kelas: 'VII', sandi: '3144576038', fotoUrl: 'https://drive.google.com/file/d/1yfuDZzN55L8BQ8sYu25OUzUzDah9pxUW/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0144332908', nama: 'AHMAD HABIBI', kelas: 'VII', sandi: '0144332908', fotoUrl: 'https://drive.google.com/file/d/1tk7Zqv6lfErkSxorESRkyKjFXHmmChMW/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0141319051', nama: 'AHMAD RAFFI PRATAMA', kelas: 'VII', sandi: '0141319051', fotoUrl: 'https://drive.google.com/file/d/1DGCQXpjvSwgJKKlMWNbCEagDQ0sB-5Sk/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0145598280', nama: 'ANISA OKTA MAHARANI', kelas: 'VII', sandi: '0145598280', fotoUrl: 'https://drive.google.com/file/d/1qlbPCwlc2VOKAo2OaUnWh6zECyjRML9E/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0134387733', nama: 'DESI NUR FARIDA', kelas: 'VII', sandi: '0134387733', fotoUrl: 'https://drive.google.com/file/d/1zKiPA50CP7lDQCw4TyweiqF-Ni0JDh0e/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0147066207', nama: 'ELVA QOTHRUN NADA', kelas: 'VII', sandi: '0147066207', fotoUrl: 'https://drive.google.com/file/d/1Qt0ZT6RXHzt-D9F5aXUQS9XOwi7bj75A/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0139497626', nama: 'ERIK SETIAWAN', kelas: 'VII', sandi: '0139497626', fotoUrl: '', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '3144673956', nama: "FA'IZATUZ ZAKIYYAH", kelas: 'VII', sandi: '3144673956', fotoUrl: 'https://drive.google.com/file/d/1rP5sr0LASv8duayDeU_de7SwBxcM7CTj/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0143277471', nama: 'HERSI VELISA FITRIANINGSIH', kelas: 'VII', sandi: '0143277471', fotoUrl: 'https://drive.google.com/file/d/12jotC1N4Xlev-lxGtsn4fIlX0j64arMG/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0139141424', nama: 'KISSA ZUL FANI', kelas: 'VII', sandi: '0139141424', fotoUrl: 'https://drive.google.com/file/d/1Sv9KQYyxXZfG8c_lOrn3QktYIl6sMeIY/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '3142999609', nama: 'LIA DIYANA MARTINA', kelas: 'VII', sandi: '3142999609', fotoUrl: 'https://drive.google.com/file/d/16ZrHj3f6l0b8HQ-OjzCMMqW8UkMryPad/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0131111328', nama: 'MUHAMMAD ANDIKA VERNANDA', kelas: 'VII', sandi: '0131111328', fotoUrl: 'https://drive.google.com/file/d/1zyDiz9kiAjx1pVKhx9fFAgQPKTiiLwKI/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0133457391', nama: 'MUHAMMAD AZKA HABIBI', kelas: 'VII', sandi: '0133457391', fotoUrl: 'https://drive.google.com/file/d/1hTSHuMdpHE2jw6SXcbs8foY5ckhC1QmC/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0131676132', nama: 'MUHAMMAD KHOIRUL FAJRI', kelas: 'VII', sandi: '0131676132', fotoUrl: 'https://drive.google.com/file/d/1uKXU2rlzYWY2k9yuc6XX0hK1wjXX3-y9/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0142860179', nama: 'MUHAMMAD KHOIRUNNIZAM', kelas: 'VII', sandi: '0142860179', fotoUrl: 'https://drive.google.com/file/d/18Ne55rRu4U1x7gQho1VB-vtTt9DaoYH7/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0144591178', nama: 'MUHAMMAD NURUL ASHAR', kelas: 'VII', sandi: '0144591178', fotoUrl: 'https://drive.google.com/file/d/1jQP1sTwc3LGJHZ6gt_o1vFeZGL_KXvtj/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0146084877', nama: 'MUZAKKI', kelas: 'VII', sandi: '0146084877', fotoUrl: 'https://drive.google.com/file/d/1YwH-eXs6RjeW32yGT7gGFALcGJVNB3VE/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0147526079', nama: 'NADA YUMNA SARI', kelas: 'VII', sandi: '0147526079', fotoUrl: 'https://drive.google.com/file/d/198BbOcVwHOqwiZ6rdjZgKHgQmiLd5jah/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0149290087', nama: 'NASHIKHATUL HIDAYAH', kelas: 'VII', sandi: '0149290087', fotoUrl: 'https://drive.google.com/file/d/1WuoiyUcYXoNIaBHeCERAasjnbSdBVaAS/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0149634939', nama: 'NISWATUS SHOFIYAH', kelas: 'VII', sandi: '0149634939', fotoUrl: 'https://drive.google.com/file/d/1bq2Z6bMSToXIh-EZyGuGlfXA2pnPPl9k/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0149928545', nama: 'NURUL LATIFATUL KHOIRIYAH', kelas: 'VII', sandi: '0149928545', fotoUrl: 'https://drive.google.com/file/d/1M8XVyV00zpQA7TudVeDqMd9qN3x_McTk/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0133063862', nama: 'QORIATUN NASYWAH', kelas: 'VII', sandi: '0133063862', fotoUrl: 'https://drive.google.com/file/d/18gNhXPKRE0MwBvAqBE5w2wKDZHNm0dO_/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0147808579', nama: 'SHOFWATUL KHOIRIYAH', kelas: 'VII', sandi: '0147808579', fotoUrl: 'https://drive.google.com/file/d/1giIMmExwP-6LqeQBumx5C5Z5YWFSKepN/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0137610166', nama: "SYAFA'ATUL CHIKMAH", kelas: 'VII', sandi: '0137610166', fotoUrl: 'https://drive.google.com/file/d/1X9OGigrNYITokW7igmzARxOZpxMg3NTV/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0144903716', nama: 'WAHYU NUR KHASANAH', kelas: 'VII', sandi: '0144903716', fotoUrl: 'https://drive.google.com/file/d/1Nfnl1tiMSYeIEUHcoXrs3yAvNJra0IR_/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0135884548', nama: 'WIDIA RAHMADANI', kelas: 'VII', sandi: '0135884548', fotoUrl: 'https://drive.google.com/file/d/1J3HiSLK5DHa8ZT6fAjQSH1yniKbnaLd-/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0133096792', nama: 'ABDUL LATIF ADAM FATIN', kelas: 'VIII', sandi: '0133096792', fotoUrl: 'https://drive.google.com/file/d/1yjr29w94TIzRNnsk-zIt3jPQAurKpp3q/view?usp=sharing', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0137630296', nama: 'AHMAD HAIKAL ARIFIN', kelas: 'VIII', sandi: '0137630296', fotoUrl: 'https://drive.google.com/file/d/1bkeqN7Rvnc8rmCNX8buQazor-iYnhepB/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0137962983', nama: 'AHMAD ZIDAN MAULANA', kelas: 'VIII', sandi: '0137962983', fotoUrl: 'https://drive.google.com/file/d/1ndWP2OgrQB0XPoeMOZdPtpIwfuk_Uud_/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0134476683', nama: 'ANNA MUAMANAH', kelas: 'VIII', sandi: '0134476683', fotoUrl: 'https://drive.google.com/file/d/1Ifh_cRf-09EUrZXDawGAwMg1PcalNJzF/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0134533962', nama: 'AQILLA QOTRUN NADA', kelas: 'VIII', sandi: '0134533962', fotoUrl: '', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0129535520', nama: 'ASSDAF JAYYID AJAIBI', kelas: 'VIII', sandi: '0129535520', fotoUrl: 'https://drive.google.com/file/d/15eNjFPm7syNrTNRfX89TRh0FG8JOOn1F/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0136616678', nama: 'DIAH FITRIA RAMANDANI', kelas: 'VIII', sandi: '0136616678', fotoUrl: 'https://drive.google.com/file/d/1pSBhSOW2adwZmfRmOA9bvqUqOVkSz0xk/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0136918064', nama: 'DINDHA PUTRI AYU ALIKA SARI', kelas: 'VIII', sandi: '0136918064', fotoUrl: 'https://drive.google.com/file/d/1ElgHr9ehJL_d0EDUTaU4kHTDwpmvMHEN/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0138877417', nama: 'DYAH AYU DWI SEPTIANA', kelas: 'VIII', sandi: '0138877417', fotoUrl: 'https://drive.google.com/file/d/15SBC9XW4Fw_eFM1Obr98qzqOhgt_Njt5/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0138949338', nama: 'ILHAM MASHURI', kelas: 'VIII', sandi: '0138949338', fotoUrl: '', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0122242217', nama: 'KARISA DIANA MEILANI', kelas: 'VIII', sandi: '0122242217', fotoUrl: 'https://drive.google.com/file/d/1I1YYu4Pwkyot2FXEkM6btc63aR0LxjyP/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0124165533', nama: 'KELVIN AHMAD MUHAJIRIN', kelas: 'VIII', sandi: '0124165533', fotoUrl: 'https://drive.google.com/file/d/1n_w1HVfpfY9mPllZiGE1J70QqWb12WoH/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0131704969', nama: 'KHOIROTUN NIKMAH', kelas: 'VIII', sandi: '0131704969', fotoUrl: 'https://drive.google.com/file/d/1Dc6rwSCOni2B56R1aA628V-fdpt5jH9u/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0136522864', nama: 'MUCHAMMAD ABSHOR FAUZI', kelas: 'VIII', sandi: '0136522864', fotoUrl: 'https://drive.google.com/file/d/1s1RYRodr8r_4HRgLL0hGEAYd6wtFXlP1/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0124895874', nama: 'MUHAMMAD ALFI SAHRIN', kelas: 'VIII', sandi: '0124895874', fotoUrl: 'https://drive.google.com/file/d/1r8709xwE_cPdC7wjuzPVNRgz04h_Ur_K/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0133627434', nama: 'MUHAMMAD ANIQ', kelas: 'VIII', sandi: '0133627434', fotoUrl: 'https://drive.google.com/file/d/1Dg4n8HKUDT5ljnBroXhsbAO6ZPoYIyLH/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '3133446229', nama: 'MUHAMMAD FATHAN AZZAFAR', kelas: 'VIII', sandi: '3133446229', fotoUrl: 'https://drive.google.com/file/d/1-QSMospWhiu8p58ooU1SPOH2vx-W0m9J/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0132045147', nama: 'NURIA SABILAH AZZAHRA', kelas: 'VIII', sandi: '0132045147', fotoUrl: 'https://drive.google.com/file/d/1WEzzPjYZPx_okI5UNEP0799G-n94xJGs/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0135518834', nama: 'RYAN DWI SAPUTRO', kelas: 'VIII', sandi: '0135518834', fotoUrl: 'https://drive.google.com/file/d/1HM2QP1waP6Zh5fhrv0_7IeOF95APLeDc/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0136768997', nama: 'SAFIRA NURUL AZMI', kelas: 'VIII', sandi: '0136768997', fotoUrl: 'https://drive.google.com/file/d/1iHZ2tLB1L-IH-cujiH7_blZrb9S55gxb/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0137081057', nama: 'SOVIA NOPA SARI', kelas: 'VIII', sandi: '0137081057', fotoUrl: 'https://drive.google.com/file/d/1rY8NcjLOCeByMZOkG6S5M5u5nQBVPyPi/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0137750800', nama: 'SYIFA AULIA', kelas: 'VIII', sandi: '0137750800', fotoUrl: 'https://drive.google.com/file/d/1DLE3Gsq4mDbnBZ-OKgzXbcXJtASqe-Sj/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0113093556', nama: 'ABDULLOH SADID', kelas: 'IX', sandi: '0113093556', fotoUrl: 'https://drive.google.com/file/d/1Z1yotmT4DC2aEt65jaXMvfIP7I41Jp2l/view?usp=sharing', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0129175552', nama: 'AHMAD ADI SAPUTRA', kelas: 'IX', sandi: '0129175552', fotoUrl: 'https://drive.google.com/file/d/1Z1yotmT4DC2aEt65jaXMvfIP7I41Jp2l/view?usp=sharing', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0126036411', nama: 'AHMAD NUR HUDA', kelas: 'IX', sandi: '0126036411', fotoUrl: 'https://drive.google.com/file/d/1bDxqcQ_Iqp9mHhYsd25V5aLoNt7ssbB9/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0117590626', nama: 'AHMAD SAIFUL ANWAR', kelas: 'IX', sandi: '0117590626', fotoUrl: 'https://drive.google.com/file/d/1W3HOUYsbjrhamnw2BExrIFR44GMWQomj/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0123045979', nama: 'ALDAN ZALZIROTUL MARDIAN', kelas: 'IX', sandi: '0123045979', fotoUrl: 'https://drive.google.com/file/d/1biYrGK8Bu-AIO_T6aZPn9b8CeKrdRrg-/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0124626030', nama: 'ANISA SYIFAURROHMAH', kelas: 'IX', sandi: '0124626030', fotoUrl: 'https://drive.google.com/file/d/1xlb5ln4RvovO9q1_tCjI2qtiik_iy3pi/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0122837110', nama: 'AULIA SEPTIANA ZAHRA', kelas: 'IX', sandi: '0122837110', fotoUrl: 'https://drive.google.com/file/d/1YE_3CixIx7BWI_2m1j9M81X9s0I1LDZ6/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0127227038', nama: 'DEVINA NURIL MAULIDHA', kelas: 'IX', sandi: '0127227038', fotoUrl: 'https://drive.google.com/file/d/16W89JOBhAwyl1HKhAuE2Do0jqoHf3agb/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0123751063', nama: 'DIAH AYU ATIKA SARI', kelas: 'IX', sandi: '0123751063', fotoUrl: 'https://drive.google.com/file/d/1A7Ku8uB9ElTievtiQ-AdhXL2T79Cg5h9/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0124844154', nama: "DUROTUN NI'MAH", kelas: 'IX', sandi: '0124844154', fotoUrl: 'https://drive.google.com/file/d/1ft2QstxHQgVZxd2OQirASaIGpkmcNK2i/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0123650526', nama: 'EKA SILFI RAMANDHANI', kelas: 'IX', sandi: '0123650526', fotoUrl: 'https://drive.google.com/file/d/1uEm0NH9zySyE45-zjFmX1l3GoVFeHoNH/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0121566615', nama: 'ELSA NOPITA ARYANI', kelas: 'IX', sandi: '0121566615', fotoUrl: 'https://drive.google.com/file/d/1Q-HiZw9eTDVRCFxzmOnrDXJLNcMwO-cf/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0126970092', nama: 'FATMAWATI BELFA KANAYA', kelas: 'IX', sandi: '0126970092', fotoUrl: 'https://drive.google.com/file/d/1dxWPMet4-hQCka7iLp77JL1YngbxmcIr/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0124850749', nama: 'LINDA NUR AYNI', kelas: 'IX', sandi: '0124850749', fotoUrl: 'https://drive.google.com/file/d/1K3nbnYQrlp_ixOnRB7DqGR1sIW21V7qf/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0125444807', nama: 'MUHAMMAD SUCI NUGROHO', kelas: 'IX', sandi: '0125444807', fotoUrl: 'https://drive.google.com/file/d/1Lkg-UYAupp4RCAywlLHBr2NH4g6EBvlE/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0111525014', nama: 'SHIFAUL JANAH', kelas: 'IX', sandi: '0111525014', fotoUrl: 'https://drive.google.com/file/d/1sNke_6YMFTPP6uvj8HahAbX7h30DbHdu/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0122772143', nama: 'SITI HALIMATUL ULFAH', kelas: 'IX', sandi: '0122772143', fotoUrl: 'https://drive.google.com/file/d/1EyyaTZIQ4493e2OhJuE11b7c2YdqhV6q/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0124382147', nama: 'TSAMROTUL WAHIDAH', kelas: 'IX', sandi: '0124382147', fotoUrl: 'https://drive.google.com/file/d/1iIGQwcv0qjDTSjXwWElGv8pb7OQ8fTpY/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null },
+        { nisn: '0125439612', nama: 'ZAINATUL HALIMAH', kelas: 'IX', sandi: '0125439612', fotoUrl: 'https://drive.google.com/file/d/1P29sPQInEVtigVKZGaNc4aUYbsYk_b4A/view?usp=drive_link', status: 'BELUM_MULAI', progres: 0, pelanggaran: 0, nilai: null, alasanSelesai: '', hasilPerSoal: null }
       ];
-      const namaBelakang = [
-        'Pratama', 'Hidayah', 'Maulana', 'Ramadhani', 'Wijaya', 'Saputra', 'Azzahra', 'Setiawan', 'Nugroho', 'Salsabila',
-        'Firdaus', 'Kurniawan', 'Mubarok', 'Hasanah', 'Santoso', 'Lestari', 'Hakim', 'Kusuma', 'Abidin', 'Safitri'
-      ];
-      const rombel = ['IX-A', 'IX-B', 'VIII-A', 'VIII-B', 'VII-A', 'VII-B'];
-      const daftar = [];
-
-      for (let i = 1; i <= 150; i++) {
-        const nisn = '0091' + String(i).padStart(6, '0');
-        const kelas = rombel[Math.floor((i - 1) / 25)];
-        let nama = `${namaDepan[(i * 7) % namaDepan.length]} ${namaBelakang[(i * 11) % namaBelakang.length]}`;
-        if (i === 1) nama = 'Ahmad Zaki Pratama';
-        if (i === 51) nama = 'Siti Nurul Hidayah';
-
-        let status = 'BELUM_MULAI';
-        let progres = 0;
-        let pelanggaran = 0;
-        let nilai = null;
-        let alasanSelesai = '';
-        let hasilPerSoal = null;
-
-        if (i > 1 && i <= 60) {
-          status = 'SELESAI';
-          progres = 8;
-          pelanggaran = i % 15 === 0 ? 1 : 0;
-          const benar = 5 + (i % 4);
-          nilai = Number(((benar / 8) * 100).toFixed(1));
-          alasanSelesai = 'Selesai mengerjakan ujian';
-          hasilPerSoal = SOAL_BAWAAN.map((_, idx) => idx < benar);
-        } else if (i > 60 && i <= 110 && i !== 51) {
-          status = 'MENGERJAKAN';
-          progres = 1 + (i % 7);
-          pelanggaran = i % 19 === 0 ? 2 : 0;
-        } else if (i === 111) {
-          status = 'TERBLOKIR';
-          progres = 4;
-          pelanggaran = 5;
-          nilai = 37.5;
-          alasanSelesai = 'Terkunci otomatis karena mencapai batas pelanggaran';
-          hasilPerSoal = [true, true, true, false, false, false, false, false];
-        }
-
-        daftar.push({
-          nisn,
-          sandi: '123456',
-          nama,
-          kelas,
-          fotoUrl: '',
-          status,
-          progres,
-          pelanggaran,
-          nilai,
-          alasanSelesai,
-          hasilPerSoal
-        });
-      }
-      return daftar;
     }
 
     let dataAplikasi = {
       pengaturan: { ...PENGATURAN_BAWAAN },
       soal: JSON.parse(JSON.stringify(SOAL_BAWAAN)),
-      peserta: buat150PesertaSimulasi(),
+      peserta: buatPesertaAwal(),
       pengumuman: ''
     };
 
@@ -1345,17 +1344,23 @@
       intervalWaktu: null,
       ukuranTeks: 'base',
       skalaArab: 1.4,
-      rasioAwalLayar: null,
       waktuPelanggaranTerakhir: 0
     };
 
+    let proktorTerverifikasi = false;
     let halamanPantauAktif = 1;
     const UKURAN_HALAMAN_PANTAU = 15;
     let targetNisnUnggahFoto = null;
     let timerAntreanSimpan = null;
-
-    // ==================== PENYIMPANAN LOKAL & ANTREAN BERTAHAP ====================
     let cacheLogoDriveBerhasil = '';
+
+    function pastikanProktor() {
+      if (!proktorTerverifikasi) {
+        tampilkanNotifikasi('Akses ditolak. Hanya proktor terverifikasi yang dapat mengubah data.', 'error');
+        return false;
+      }
+      return true;
+    }
 
     function normalisasiLinkFoto(url) {
       const bersih = (url || '').trim();
@@ -1393,6 +1398,7 @@
     }
 
     function perbaruiPratinjauLogoPengaturan() {
+      if (!pastikanProktor()) return;
       const input = document.getElementById('atur-logo-madrasah');
       const wadah = document.getElementById('pratinjau-logo-pengaturan');
       if (!wadah) return;
@@ -1402,6 +1408,10 @@
     }
 
     function prosesUnggahLogoMadrasah(event) {
+      if (!pastikanProktor()) {
+        event.target.value = '';
+        return;
+      }
       const berkas = event.target.files[0];
       if (!berkas) return;
       const pembaca = new FileReader();
@@ -1414,7 +1424,7 @@
         simpanDataAplikasi();
         renderSemuaLogoMadrasah();
         perbaruiPratinjauLogoPengaturan();
-        tampilkanNotifikasi('Logo madrasah berhasil diperbarui dari file.', 'sukses');
+        tampilkanNotifikasi('Logo madrasah berhasil diperbarui oleh proktor.', 'sukses');
       };
       pembaca.readAsDataURL(berkas);
       event.target.value = '';
@@ -1431,8 +1441,9 @@
     }
 
     function bukaUnggahFoto(nisn) {
+      if (!pastikanProktor()) return;
       if (!nisn) {
-        tampilkanNotifikasi('Pilih siswa atau ketik NISN terlebih dahulu sebelum mengganti foto.', 'peringatan');
+        tampilkanNotifikasi('Pilih peserta terlebih dahulu.', 'peringatan');
         return;
       }
       targetNisnUnggahFoto = nisn;
@@ -1441,6 +1452,7 @@
     }
 
     function simpanFotoSiswa(nisn, fotoUrl) {
+      if (!pastikanProktor()) return;
       const siswa = dataAplikasi.peserta.find(p => p.nisn === nisn);
       if (!siswa) {
         tampilkanNotifikasi(`Peserta dengan NISN ${nisn} tidak ditemukan.`, 'peringatan');
@@ -1455,6 +1467,10 @@
     }
 
     function prosesUnggahFotoSiswa(event) {
+      if (!pastikanProktor()) {
+        event.target.value = '';
+        return;
+      }
       const berkas = event.target.files[0];
       if (!berkas || !targetNisnUnggahFoto) return;
       const pembaca = new FileReader();
@@ -1473,7 +1489,7 @@
           dataAplikasi = {
             pengaturan: { ...PENGATURAN_BAWAAN },
             soal: JSON.parse(JSON.stringify(SOAL_BAWAAN)),
-            peserta: buat150PesertaSimulasi(),
+            peserta: buatPesertaAwal(),
             pengumuman: ''
           };
           simpanDataAplikasi();
@@ -1481,19 +1497,23 @@
         }
         const parsed = JSON.parse(raw);
         if (parsed && typeof parsed === 'object') {
+          const pengaturanGabungan = { ...PENGATURAN_BAWAAN, ...(parsed.pengaturan || {}) };
+          if (!pengaturanGabungan.urlSpreadsheet) {
+            pengaturanGabungan.urlSpreadsheet = URL_SPREADSHEET_BAWAAN;
+          }
           dataAplikasi = {
-            pengaturan: { ...PENGATURAN_BAWAAN, ...(parsed.pengaturan || {}) },
+            pengaturan: pengaturanGabungan,
             soal: Array.isArray(parsed.soal) && parsed.soal.length > 0 ? parsed.soal : JSON.parse(JSON.stringify(SOAL_BAWAAN)),
-            peserta: Array.isArray(parsed.peserta) ? parsed.peserta : buat150PesertaSimulasi(),
+            peserta: Array.isArray(parsed.peserta) && parsed.peserta.length > 0 ? parsed.peserta : buatPesertaAwal(),
             pengumuman: typeof parsed.pengumuman === 'string' ? parsed.pengumuman : ''
           };
         }
       } catch (err) {
-        console.error('Gagal memuat data lokal, memulihkan data bawaan:', err);
+        console.error('Gagal memuat data lokal:', err);
         dataAplikasi = {
           pengaturan: { ...PENGATURAN_BAWAAN },
           soal: JSON.parse(JSON.stringify(SOAL_BAWAAN)),
-          peserta: buat150PesertaSimulasi(),
+          peserta: buatPesertaAwal(),
           pengumuman: ''
         };
       }
@@ -1538,10 +1558,11 @@
     }
 
     function resetDataBawaan() {
+      if (!pastikanProktor()) return;
       bukaDialog({
-        judul: 'Pulihkan Data Bawaan?',
-        pesan: 'Seluruh pengaturan, bank soal, dan daftar peserta akan dikembalikan ke data awal bawaan.',
-        teksOk: 'Ya, Pulihkan',
+        judul: 'Reset & Kosongkan Seluruh Siswa?',
+        pesan: 'Seluruh progres/nilai lama dan draf ujian akan dihapus bersih sehingga daftar siswa menjadi kosong dan siap diisi data siswa baru oleh proktor.',
+        teksOk: 'Ya, Reset & Kosongkan',
         onOk: () => {
           Object.keys(localStorage).forEach(k => {
             if (k === KUNCI_PENYIMPANAN || k.startsWith('cbt_draft_')) {
@@ -1551,13 +1572,89 @@
           dataAplikasi = {
             pengaturan: { ...PENGATURAN_BAWAAN },
             soal: JSON.parse(JSON.stringify(SOAL_BAWAAN)),
-            peserta: buat150PesertaSimulasi(),
+            peserta: [],
             pengumuman: ''
           };
           cacheLogoDriveBerhasil = '';
           simpanDataAplikasi();
           sinkronkanTampilanLogin();
-          tampilkanNotifikasi('Data bawaan berhasil dipulihkan.', 'sukses');
+          renderTabelPantau();
+          renderDaftarFotoSiswa();
+          renderDaftarKelolaSiswa();
+          renderRekapNilai();
+          tampilkanNotifikasi('Semua data siswa berhasil direset dan dikosongkan oleh proktor.', 'sukses');
+        }
+      });
+    }
+
+    function bukaFormTambahSiswaCepat() {
+      if (!pastikanProktor()) return;
+      bukaDialog({
+        judul: 'Tambah Siswa Baru (Khusus Proktor)',
+        pesan: 'Isi data siswa baru di bawah ini (jumlah siswa tidak terbatas):',
+        htmlTambahan: `
+          <div class="space-y-2.5 text-left">
+            <div>
+              <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">NISN *</label>
+              <input type="text" id="input-siswa-baru-nisn" placeholder="Contoh: 0091234567" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-mono" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Nama Lengkap Siswa *</label>
+              <input type="text" id="input-siswa-baru-nama" placeholder="Contoh: Ahmad Zaki" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Kelas</label>
+                <input type="text" id="input-siswa-baru-kelas" value="VII" placeholder="VII" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Kata Sandi</label>
+                <input type="text" id="input-siswa-baru-sandi" value="123456" placeholder="123456" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-mono" />
+              </div>
+            </div>
+          </div>
+        `,
+        teksOk: 'Simpan Siswa',
+        onOk: () => {
+          if (!pastikanProktor()) return;
+          const nisn = (document.getElementById('input-siswa-baru-nisn')?.value || '').trim();
+          const nama = (document.getElementById('input-siswa-baru-nama')?.value || '').trim();
+          const kelas = (document.getElementById('input-siswa-baru-kelas')?.value || 'VII').trim() || 'VII';
+          const sandi = (document.getElementById('input-siswa-baru-sandi')?.value || '123456').trim() || '123456';
+
+          if (!nisn || !nama) {
+            tampilkanNotifikasi('NISN dan Nama Lengkap wajib diisi.', 'peringatan');
+            return;
+          }
+
+          const dataSiswaBaru = {
+            nisn,
+            nama,
+            kelas,
+            sandi,
+            fotoUrl: '',
+            status: 'BELUM_MULAI',
+            progres: 0,
+            pelanggaran: 0,
+            nilai: null,
+            alasanSelesai: '',
+            hasilPerSoal: null
+          };
+
+          const idxAda = dataAplikasi.peserta.findIndex(p => p.nisn === nisn);
+          if (idxAda >= 0) {
+            dataAplikasi.peserta[idxAda] = { ...dataAplikasi.peserta[idxAda], ...dataSiswaBaru };
+          } else {
+            dataAplikasi.peserta.push(dataSiswaBaru);
+          }
+
+          simpanDataAplikasi();
+          sinkronkanTampilanLogin();
+          renderTabelPantau();
+          renderDaftarFotoSiswa();
+          renderDaftarKelolaSiswa();
+          renderRekapNilai();
+          tampilkanNotifikasi(`Siswa "${nama}" berhasil ditambahkan.`, 'sukses');
         }
       });
     }
@@ -1642,6 +1739,11 @@
       }
     }
 
+    function keluarSesiProktor() {
+      proktorTerverifikasi = false;
+      kembaliKeLogin();
+    }
+
     function kembaliKeLogin() {
       hentikanTimerUjian();
       sesiUjian.aktif = false;
@@ -1650,7 +1752,7 @@
       tampilkanHalaman('halaman-login');
     }
 
-    // ==================== LOGIN SISWA & PENGAWAS ====================
+    // ==================== LOGIN SISWA & PROKTOR ====================
     function gantiTabLogin(peran) {
       const tabSiswa = document.getElementById('tab-login-siswa');
       const tabGuru = document.getElementById('tab-login-guru');
@@ -1670,13 +1772,6 @@
       }
     }
 
-    function ubahMapelCepatDariLogin(mapelBaru) {
-      dataAplikasi.pengaturan.mataPelajaran = mapelBaru || 'Semua Mata Pelajaran MTs';
-      simpanDataAplikasi();
-      sinkronkanTampilanLogin();
-      tampilkanNotifikasi(`Mata pelajaran diubah menjadi: ${dataAplikasi.pengaturan.mataPelajaran}`, 'info');
-    }
-
     function sinkronkanTampilanLogin() {
       renderSemuaLogoMadrasah();
       const p = dataAplikasi.pengaturan;
@@ -1692,15 +1787,6 @@
       const mapelEl = document.getElementById('login-nama-mapel');
       if (mapelEl) mapelEl.textContent = `Mata Pelajaran: ${p.mataPelajaran} • Tahun Pelajaran ${p.tahunPelajaran}`;
 
-      const selectCepat = document.getElementById('login-pilih-mapel-cepat');
-      if (selectCepat) {
-        if (DAFTAR_MAPEL_MTS.includes(p.mataPelajaran)) {
-          selectCepat.value = p.mataPelajaran;
-        } else {
-          selectCepat.value = 'Semua Mata Pelajaran MTs';
-        }
-      }
-
       const durasiEl = document.getElementById('login-kotak-durasi');
       if (durasiEl) durasiEl.textContent = `${p.durasiMenit} Menit`;
 
@@ -1713,14 +1799,12 @@
       const namaGuruEl = document.getElementById('login-nama-guru');
       if (namaGuruEl) namaGuruEl.textContent = p.namaGuru;
 
-      const emailGuruEl = document.getElementById('login-email-guru');
-      if (emailGuruEl) emailGuruEl.textContent = p.emailGuru;
-
+      // Dropdown hanya menampilkan NAMA saja (tanpa NISN atau kelas)
       const selectSiswa = document.getElementById('login-pilih-nama-siswa');
       if (selectSiswa) {
         const nilaiSebelumnya = selectSiswa.value;
-        selectSiswa.innerHTML = `<option value="">-- Pilih Nama Peserta (${dataAplikasi.peserta.length} Siswa) atau Ketik NISN --</option>` +
-          dataAplikasi.peserta.map(s => `<option value="${s.nisn}">${s.nama} (${s.kelas} • ${s.nisn})</option>`).join('');
+        selectSiswa.innerHTML = `<option value="">-- Pilih Nama Peserta --</option>` +
+          dataAplikasi.peserta.map(s => `<option value="${s.nisn}">${s.nama}</option>`).join('');
         if (nilaiSebelumnya) selectSiswa.value = nilaiSebelumnya;
       }
 
@@ -1728,42 +1812,26 @@
     }
 
     function pilihSiswaDariDropdownLogin(nisn) {
-      const inputNisn = document.getElementById('login-nisn');
-      if (inputNisn && nisn) {
-        inputNisn.value = nisn;
-      }
       perbaruiPratinjauLogin();
     }
 
     function perbaruiPratinjauLogin() {
-      const nisn = (document.getElementById('login-nisn')?.value || '').trim();
+      const selectSiswa = document.getElementById('login-pilih-nama-siswa');
+      const nisnDipilih = (selectSiswa?.value || '').trim();
       const avatarEl = document.getElementById('pratinjau-avatar-login');
       const namaEl = document.getElementById('pratinjau-nama-login');
       const kelasEl = document.getElementById('pratinjau-kelas-login');
-      const btnFoto = document.getElementById('btn-unggah-foto-login');
-      const selectSiswa = document.getElementById('login-pilih-nama-siswa');
 
-      const cocok = dataAplikasi.peserta.find(p => p.nisn === nisn);
-      if (selectSiswa && selectSiswa.value !== (cocok ? cocok.nisn : '')) {
-        selectSiswa.value = cocok ? cocok.nisn : '';
-      }
+      const cocok = dataAplikasi.peserta.find(p => p.nisn === nisnDipilih);
 
       if (cocok) {
         if (avatarEl) avatarEl.innerHTML = buatHtmlAvatarSiswa(cocok);
         if (namaEl) namaEl.textContent = cocok.nama;
-        if (kelasEl) kelasEl.textContent = `NISN: ${cocok.nisn} • Kelas ${cocok.kelas}`;
-        if (btnFoto) btnFoto.classList.remove('hidden');
-      } else if (nisn) {
-        const dummy = { nama: `NISN ${nisn}`, fotoUrl: '' };
-        if (avatarEl) avatarEl.innerHTML = buatHtmlAvatarSiswa(dummy);
-        if (namaEl) namaEl.textContent = `Peserta NISN ${nisn}`;
-        if (kelasEl) kelasEl.textContent = 'Pastikan NISN dan kata sandi sesuai';
-        if (btnFoto) btnFoto.classList.add('hidden');
+        if (kelasEl) kelasEl.textContent = `Kelas ${cocok.kelas} • Silakan isi NISN & sandi`;
       } else {
         if (avatarEl) avatarEl.innerHTML = '<span>PS</span>';
-        if (namaEl) namaEl.textContent = 'Belum Memilih Peserta';
-        if (kelasEl) kelasEl.textContent = 'Pilih nama di atas atau ketik NISN';
-        if (btnFoto) btnFoto.classList.add('hidden');
+        if (namaEl) namaEl.textContent = 'Belum Memilih Nama';
+        if (kelasEl) kelasEl.textContent = 'Silakan pilih nama pada pilihan di bawah';
       }
     }
 
@@ -1776,44 +1844,31 @@
       if (teks) teks.textContent = sedangSembunyi ? 'Sembunyi' : 'Lihat';
     }
 
-    function isiAkunUjiCobaSiswa() {
-      const sampel = dataAplikasi.peserta[0];
-      if (!sampel) {
-        tampilkanNotifikasi('Daftar siswa masih kosong.', 'peringatan');
-        return;
-      }
-      document.getElementById('login-nisn').value = sampel.nisn;
-      document.getElementById('login-sandi').value = sampel.sandi;
-      document.getElementById('login-token').value = dataAplikasi.pengaturan.token;
-      perbaruiPratinjauLogin();
-      tampilkanNotifikasi(`Akun uji coba (${sampel.nama}) berhasil diisi.`, 'info');
-    }
-
-    function isiAkunUjiCobaPengawas() {
-      document.getElementById('guru-user').value = dataAplikasi.pengaturan.emailGuru || 'gagiksukri@gmail.com';
-      document.getElementById('guru-sandi').value = 'guru123';
-      tampilkanNotifikasi('Akun uji coba Pengawas & Guru telah diisi.', 'info');
-    }
-
     function prosesLoginSiswa(event) {
       event.preventDefault();
+      const namaDipilihNisn = (document.getElementById('login-pilih-nama-siswa')?.value || '').trim();
       const nisn = document.getElementById('login-nisn').value.trim();
       const sandi = document.getElementById('login-sandi').value.trim();
       const token = document.getElementById('login-token').value.trim().toUpperCase();
 
-      if (token !== dataAplikasi.pengaturan.token.toUpperCase()) {
-        tampilkanNotifikasi('Token ujian tidak sesuai. Periksa kembali token dari pengawas.', 'error');
+      if (!namaDipilihNisn) {
+        tampilkanNotifikasi('Silakan pilih nama peserta terlebih dahulu.', 'peringatan');
         return;
       }
 
-      const siswa = dataAplikasi.peserta.find(p => p.nisn === nisn);
-      if (!siswa || siswa.sandi !== sandi) {
-        tampilkanNotifikasi('NISN atau kata sandi peserta tidak ditemukan.', 'error');
+      if (token !== dataAplikasi.pengaturan.token.toUpperCase()) {
+        tampilkanNotifikasi('Token ujian tidak sesuai. Periksa kembali token dari proktor.', 'error');
+        return;
+      }
+
+      const siswa = dataAplikasi.peserta.find(p => p.nisn === namaDipilihNisn);
+      if (!siswa || siswa.nisn !== nisn || siswa.sandi !== sandi) {
+        tampilkanNotifikasi('NISN atau kata sandi tidak sesuai dengan nama peserta yang dipilih.', 'error');
         return;
       }
 
       if (siswa.status === 'TERBLOKIR') {
-        tampilkanNotifikasi('Akun Anda terkunci karena batas pelanggaran. Hubungi pengawas ruang.', 'error');
+        tampilkanNotifikasi('Akun Anda terkunci karena batas pelanggaran. Hubungi proktor ruang.', 'error');
         return;
       }
 
@@ -1829,14 +1884,15 @@
       event.preventDefault();
       const user = document.getElementById('guru-user').value.trim().toLowerCase();
       const sandi = document.getElementById('guru-sandi').value.trim();
-      const emailGuru = (dataAplikasi.pengaturan.emailGuru || 'gagiksukri@gmail.com').toLowerCase();
 
-      const userValid = user === emailGuru || user === 'guru' || user === 'admin' || user === 'sukri';
-      if (!userValid || sandi !== 'guru123') {
-        tampilkanNotifikasi('Email/ID pengawas atau kata sandi salah.', 'error');
+      if (user !== KREDENSIAL_PROKTOR.id || sandi !== KREDENSIAL_PROKTOR.sandi) {
+        tampilkanNotifikasi('ID atau kata sandi proktor tidak valid.', 'error');
         return;
       }
 
+      proktorTerverifikasi = true;
+      document.getElementById('guru-user').value = '';
+      document.getElementById('guru-sandi').value = '';
       bukaPanelGuru();
     }
 
@@ -1882,7 +1938,6 @@
         intervalWaktu: null,
         ukuranTeks: 'base',
         skalaArab: 1.4,
-        rasioAwalLayar: null,
         waktuPelanggaranTerakhir: 0
       };
 
@@ -1911,7 +1966,7 @@
 
       document.getElementById('ujian-header-mapel').textContent = `${p.mataPelajaran} • Tahun Pelajaran ${p.tahunPelajaran}`;
       document.getElementById('ujian-nama-siswa').textContent = siswa.nama;
-      document.getElementById('ujian-meta-siswa').textContent = `NISN: ${siswa.nisn} • ${siswa.kelas}`;
+      document.getElementById('ujian-meta-siswa').textContent = `Kelas ${siswa.kelas}`;
       document.getElementById('ujian-avatar-siswa').innerHTML = buatHtmlAvatarSiswa(siswa);
       perbaruiTampilanPelanggaran();
       aturUkuranTeks('base');
@@ -2514,7 +2569,7 @@
       renderSemuaLogoMadrasah();
       document.getElementById('hasil-avatar-siswa').innerHTML = buatHtmlAvatarSiswa(peserta);
       document.getElementById('hasil-nama-siswa').textContent = peserta.nama;
-      document.getElementById('hasil-meta-siswa').textContent = `NISN: ${peserta.nisn} • Kelas: ${peserta.kelas} • Mapel: ${dataAplikasi.pengaturan.mataPelajaran}`;
+      document.getElementById('hasil-meta-siswa').textContent = `Kelas: ${peserta.kelas} • Mapel: ${dataAplikasi.pengaturan.mataPelajaran}`;
       document.getElementById('hasil-keterangan-selesai').textContent = `Keterangan: ${alasanSelesai}`;
       document.getElementById('hasil-kode-bukti').textContent = kodeBukti;
       document.getElementById('hasil-waktu-selesai').textContent = waktuSekarang;
@@ -2568,13 +2623,13 @@
       tampilkanHalaman('halaman-hasil');
     }
 
-    // ==================== PANEL PENGAWAS & GURU ====================
+    // ==================== PANEL PROKTOR & GURU ====================
     function bukaPanelGuru() {
+      if (!pastikanProktor()) return;
       renderSemuaLogoMadrasah();
       document.getElementById('guru-token-aktif').textContent = dataAplikasi.pengaturan.token;
       document.getElementById('guru-lencana-tapel').textContent = `TP ${dataAplikasi.pengaturan.tahunPelajaran}`;
       document.getElementById('guru-nama-aktif').textContent = dataAplikasi.pengaturan.namaGuru;
-      document.getElementById('guru-email-aktif').textContent = dataAplikasi.pengaturan.emailGuru;
       document.getElementById('bap-pengawas').value = dataAplikasi.pengaturan.namaGuru;
       document.getElementById('input-pengumuman-langsung').value = dataAplikasi.pengumuman || '';
 
@@ -2591,6 +2646,7 @@
     }
 
     function gantiTabGuru(tab) {
+      if (!pastikanProktor()) return;
       const daftarTab = ['pantau', 'soal', 'siswa', 'rekap', 'bap', 'pengaturan'];
       daftarTab.forEach(t => {
         const tombol = document.getElementById(`tab-guru-${t}`);
@@ -2620,6 +2676,7 @@
     }
 
     function kirimPengumumanLangsung() {
+      if (!pastikanProktor()) return;
       const teks = document.getElementById('input-pengumuman-langsung').value.trim();
       dataAplikasi.pengumuman = teks;
       simpanDataAplikasi();
@@ -2755,16 +2812,18 @@
     }
 
     function bukaBlokirSiswa(nisn) {
+      if (!pastikanProktor()) return;
       const siswa = dataAplikasi.peserta.find(p => p.nisn === nisn);
       if (!siswa) return;
       siswa.status = 'MENGERJAKAN';
       siswa.pelanggaran = Math.max(0, dataAplikasi.pengaturan.batasPelanggaran - 1);
       simpanDataAplikasi();
       renderTabelPantau();
-      tampilkanNotifikasi(`Blokir ${siswa.nama} telah dibuka.`, 'sukses');
+      tampilkanNotifikasi(`Blokir ${siswa.nama} telah dibuka oleh proktor.`, 'sukses');
     }
 
     function paksaSelesaiSiswa(nisn) {
+      if (!pastikanProktor()) return;
       const siswa = dataAplikasi.peserta.find(p => p.nisn === nisn);
       if (!siswa) return;
       bukaDialog({
@@ -2772,22 +2831,24 @@
         pesan: `Ujian atas nama ${siswa.nama} (${siswa.nisn}) akan dikumpulkan dan dinilai sekarang.`,
         teksOk: 'Ya, Paksa Selesai',
         onOk: () => {
+          if (!pastikanProktor()) return;
           const totalSoal = dataAplikasi.soal.length;
           const benar = siswa.progres || 0;
           siswa.status = 'SELESAI';
           siswa.progres = totalSoal;
           siswa.nilai = totalSoal > 0 ? Number(((benar / totalSoal) * 100).toFixed(1)) : 0;
-          siswa.alasanSelesai = 'Diselesaikan oleh pengawas';
+          siswa.alasanSelesai = 'Diselesaikan oleh proktor';
           localStorage.removeItem(`cbt_draft_${siswa.nisn}`);
           simpanDataAplikasi();
           renderTabelPantau();
           renderRekapNilai();
-          tampilkanNotifikasi(`Ujian ${siswa.nama} telah diselesaikan oleh pengawas.`, 'sukses');
+          tampilkanNotifikasi(`Ujian ${siswa.nama} telah diselesaikan oleh proktor.`, 'sukses');
         }
       });
     }
 
     function resetLoginSiswa(nisn) {
+      if (!pastikanProktor()) return;
       const siswa = dataAplikasi.peserta.find(p => p.nisn === nisn);
       if (!siswa) return;
       bukaDialog({
@@ -2795,6 +2856,7 @@
         pesan: `Status ujian ${siswa.nama} (${siswa.nisn}) akan direset ke awal agar bisa login ulang.`,
         teksOk: 'Ya, Reset Login',
         onOk: () => {
+          if (!pastikanProktor()) return;
           siswa.status = 'BELUM_MULAI';
           siswa.progres = 0;
           siswa.pelanggaran = 0;
@@ -2805,7 +2867,7 @@
           simpanDataAplikasi();
           renderTabelPantau();
           renderRekapNilai();
-          tampilkanNotifikasi(`Login ${siswa.nama} berhasil direset.`, 'sukses');
+          tampilkanNotifikasi(`Login ${siswa.nama} berhasil direset oleh proktor.`, 'sukses');
         }
       });
     }
@@ -2855,6 +2917,7 @@
 
     function prosesTambahSoal(event) {
       event.preventDefault();
+      if (!pastikanProktor()) return;
       const tipe = document.getElementById('soal-tipe-baru').value;
       const teksArab = document.getElementById('soal-arab-baru').value.trim();
       const stimulus = document.getElementById('soal-stimulus-baru').value.trim();
@@ -2898,6 +2961,7 @@
     }
 
     function hapusSoal(idSoal) {
+      if (!pastikanProktor()) return;
       if (dataAplikasi.soal.length <= 1) {
         tampilkanNotifikasi('Minimal harus ada 1 soal di bank soal.', 'peringatan');
         return;
@@ -2957,6 +3021,7 @@
     }
 
     function unduhContohFormatSoal() {
+      if (!pastikanProktor()) return;
       const contoh = [
         'Tipe,Pertanyaan,Opsi A,Opsi B,Opsi C,Opsi D,Kunci,Teks Arab,Pembahasan',
         'MCSA,"Rukun wudu yang pertama adalah...","Membasuh muka","Niat","Membasuh tangan","Mengusap kepala","B","","Niat merupakan rukun wudu yang pertama."',
@@ -2967,6 +3032,10 @@
     }
 
     function prosesUnggahFileSoal(event) {
+      if (!pastikanProktor()) {
+        event.target.value = '';
+        return;
+      }
       const berkas = event.target.files[0];
       if (!berkas) return;
       const pembaca = new FileReader();
@@ -3005,6 +3074,7 @@
     }
 
     function prosesTempelSoalMassal() {
+      if (!pastikanProktor()) return;
       const teks = document.getElementById('teks-impor-soal-massal').value.trim();
       if (!teks) {
         tampilkanNotifikasi('Tempelkan daftar soal terlebih dahulu.', 'peringatan');
@@ -3060,6 +3130,7 @@
     }
 
     function unduhSoalCSV() {
+      if (!pastikanProktor()) return;
       const baris = [['No', 'Tipe', 'Pertanyaan', 'Opsi A', 'Opsi B', 'Opsi C', 'Opsi D', 'Kunci']];
       dataAplikasi.soal.forEach((s, idx) => {
         const opsi = s.opsi || ['', '', '', ''];
@@ -3115,6 +3186,7 @@
     }
 
     function aturLinkFotoPrompt(nisn) {
+      if (!pastikanProktor()) return;
       const siswa = dataAplikasi.peserta.find(p => p.nisn === nisn);
       if (!siswa) return;
       bukaDialog({
@@ -3159,6 +3231,7 @@
     }
 
     function hapusPesertaSatuan(nisn) {
+      if (!pastikanProktor()) return;
       const siswa = dataAplikasi.peserta.find(p => p.nisn === nisn);
       if (!siswa) return;
       bukaDialog({
@@ -3166,6 +3239,7 @@
         pesan: `Hapus ${siswa.nama} (${siswa.nisn}) dari daftar peserta?`,
         teksOk: 'Ya, Hapus',
         onOk: () => {
+          if (!pastikanProktor()) return;
           dataAplikasi.peserta = dataAplikasi.peserta.filter(p => p.nisn !== nisn);
           localStorage.removeItem(`cbt_draft_${nisn}`);
           simpanDataAplikasi();
@@ -3180,11 +3254,13 @@
     }
 
     function hapusSemuaPeserta() {
+      if (!pastikanProktor()) return;
       bukaDialog({
         judul: 'Hapus Seluruh Daftar Siswa?',
         pesan: 'Semua data peserta yang tersimpan saat ini akan dikosongkan. Anda bisa mengimpor daftar siswa baru kapan saja tanpa batas jumlah.',
         teksOk: 'Ya, Kosongkan Semua',
         onOk: () => {
+          if (!pastikanProktor()) return;
           dataAplikasi.peserta.forEach(p => localStorage.removeItem(`cbt_draft_${p.nisn}`));
           dataAplikasi.peserta = [];
           simpanDataAplikasi();
@@ -3199,6 +3275,7 @@
     }
 
     function prosesImporSiswaMassal() {
+      if (!pastikanProktor()) return;
       const teks = document.getElementById('teks-impor-siswa').value.trim();
       if (!teks) {
         tampilkanNotifikasi('Masukkan data peserta terlebih dahulu.', 'peringatan');
@@ -3215,7 +3292,7 @@
           daftarBaru.push({
             nisn: bagian[0],
             nama: bagian[1],
-            kelas: bagian[2] || 'IX-A',
+            kelas: bagian[2] || 'VII',
             sandi: bagian[3] || '123456',
             fotoUrl: bagian[4] || '',
             status: 'BELUM_MULAI',
@@ -3263,10 +3340,11 @@
     }
 
     function cetakKartuPeserta() {
+      if (!pastikanProktor()) return;
       const kelasPilih = document.getElementById('kelas-cetak-kartu').value;
       const daftar = kelasPilih === 'SEMUA'
         ? dataAplikasi.peserta
-        : dataAplikasi.peserta.filter(p => p.kelas === kelasPilih);
+        : dataAplikasi.peserta.filter(p => p.kelas === kelasPilih || p.kelas.startsWith(kelasPilih + '-'));
 
       if (daftar.length === 0) {
         tampilkanNotifikasi('Tidak ada peserta pada kelas yang dipilih.', 'peringatan');
@@ -3365,6 +3443,7 @@
     }
 
     function unduhRekapNilaiCSV() {
+      if (!pastikanProktor()) return;
       const baris = [['No', 'NISN', 'Nama Peserta', 'Kelas', 'Mata Pelajaran', 'Tahun Pelajaran', 'Status', 'Pelanggaran', 'Nilai']];
       dataAplikasi.peserta.forEach((p, idx) => {
         baris.push([
@@ -3426,15 +3505,15 @@
         <div style="margin-top:28px; display:flex; justify-content:flex-end;">
           <div style="text-align:center; min-width:200px;">
             <p>Ngaringan, ${new Date().toLocaleDateString('id-ID')}</p>
-            <p style="margin-bottom:44px;">Pengawas / Guru,</p>
+            <p style="margin-bottom:44px;">Proktor / Pengawas,</p>
             <p style="font-weight:800; text-decoration:underline; margin:0;">${pengawas}</p>
-            <p style="font-size:11px; color:#475569; margin:2px 0 0 0;">${dataAplikasi.pengaturan.emailGuru}</p>
           </div>
         </div>
       `;
     }
 
     function cetakBAP() {
+      if (!pastikanProktor()) return;
       renderPratinjauBAP();
       const area = document.getElementById('area-cetak');
       area.innerHTML = document.getElementById('pratinjau-bap').innerHTML;
@@ -3450,6 +3529,7 @@
     }
 
     function muatPengaturanKeForm() {
+      if (!pastikanProktor()) return;
       const p = dataAplikasi.pengaturan;
       document.getElementById('atur-logo-madrasah').value = p.logoMadrasah || LOGO_DEFAULT_DRIVE;
       perbaruiPratinjauLogoPengaturan();
@@ -3477,6 +3557,7 @@
     }
 
     function acakTokenOtomatis() {
+      if (!pastikanProktor()) return;
       const hurufAngka = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
       let hasil = '';
       for (let i = 0; i < 6; i++) {
@@ -3487,6 +3568,7 @@
 
     function prosesSimpanPengaturan(event) {
       event.preventDefault();
+      if (!pastikanProktor()) return;
       const pilihanMapel = document.getElementById('atur-mapel-pilihan').value;
       const mapelKustom = document.getElementById('atur-mapel-kustom').value.trim();
       const mapelFinal = pilihanMapel === 'LAINNYA' ? (mapelKustom || 'Mata Pelajaran Lainnya') : pilihanMapel;
@@ -3512,7 +3594,52 @@
       document.getElementById('guru-lencana-tapel').textContent = `TP ${dataAplikasi.pengaturan.tahunPelajaran}`;
       renderTabelPantau();
       renderPratinjauBAP();
-      tampilkanNotifikasi('Pengaturan ujian dan logo madrasah berhasil disimpan.', 'sukses');
+      tampilkanNotifikasi('Pengaturan ujian berhasil disimpan oleh proktor.', 'sukses');
+    }
+
+    function kirimKeGoogleSpreadsheet(payload) {
+      const urlSp = (dataAplikasi.pengaturan?.urlSpreadsheet || '').trim();
+      if (!urlSp) return Promise.resolve(false);
+      return fetch(urlSp, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload || {})
+      })
+        .then(() => true)
+        .catch(() => false);
+    }
+
+    function ujiKoneksiSpreadsheet() {
+      if (!pastikanProktor()) return;
+      const inputSp = document.getElementById('atur-url-spreadsheet');
+      const urlSp = (inputSp ? inputSp.value : (dataAplikasi.pengaturan?.urlSpreadsheet || '')).trim();
+      if (!urlSp) {
+        tampilkanNotifikasi('Tempelkan URL Web App Google Spreadsheet terlebih dahulu.', 'peringatan');
+        return;
+      }
+      dataAplikasi.pengaturan.urlSpreadsheet = urlSp;
+      simpanDataAplikasi();
+      kirimKeGoogleSpreadsheet({
+        jenis: 'UJI_KONEKSI',
+        waktu: new Date().toLocaleString('id-ID'),
+        tahunPelajaran: dataAplikasi.pengaturan.tahunPelajaran,
+        mataPelajaran: dataAplikasi.pengaturan.mataPelajaran,
+        nisn: '0000000000',
+        nama: 'Uji Koneksi Sistem',
+        kelas: 'MTS',
+        status: 'UJI_KONEKSI',
+        progres: 0,
+        pelanggaran: 0,
+        nilai: '',
+        alasanSelesai: 'Tes sambungan dari Panel Proktor'
+      }).then((ok) => {
+        if (ok) {
+          tampilkanNotifikasi('Permintaan uji kirim dikirim ke Google Spreadsheet. Cek sheet Rekap_Nilai.', 'sukses');
+        } else {
+          tampilkanNotifikasi('Gagal menghubungi URL Spreadsheet. Periksa kembali link Web App.', 'error');
+        }
+      });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
